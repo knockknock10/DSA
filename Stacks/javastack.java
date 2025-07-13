@@ -1,6 +1,9 @@
 import java.util.Stack;
 
 public class javastack{
+    //check if there is a valid parenthesis in the string
+    //valid parenthesis means that every opening bracket has a closing bracket in the correct order
+    //e.g. "()" is valid, "(]" is not valid, "({[]
     public static boolean isvalid(String str){
 
         Stack<Character> s = new Stack<>();
