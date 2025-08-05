@@ -6,7 +6,7 @@ public class buildtree {
         Node(int data){
             this.data = data;
             this.left = null;
-            this.right = null
+            this.right = null;
         }
     }
     static class Binarytree{
