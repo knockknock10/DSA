@@ -1,6 +1,37 @@
 import java.util.Stack;
 
-public class qabyc {          // T.C  O(n)
+public class qabyc {   
+    public static class Queue{
+        static Stack<Integer> s1 = new Stack<>();
+        static Stack<Integer> s2 = new Stack<>();
+        public static boolean isEmpty(){
+            return s1.isEmpty();
+        }//add
+        public static void add(int data){
+            while(!s1.isEmpty()){
+                s2.push(s1.pop());
+            }
+            s1.add(data);
+            while (!s2.isEmpty()) {
+                s1.push(s2.pop());
+            }
+        }//remove
+        public static int remove(){
+            if(s1.isEmpty()){
+                System.out.println("Empty");
+                return -1;
+            }
+            return s1.pop();
+        }
+        public static int peek(){
+            if(s1.isEmpty()){
+                System.out.println("Empty");
+                return -1;
+            }
+            return s1.peek();
+        }
+    }
+    //finding the largest rectangle in a histogram    // T.C  O(n)
     public static void maxArea_histogram(int arr[]){
         int maxarea = 0;
         int nsr[] = new int[arr.length];
@@ -42,7 +73,15 @@ public class qabyc {          // T.C  O(n)
          
     }
     public static void main(String args[]){
-        int arr[]={2,1,5,6,2,3};
-        maxArea_histogram(arr);
+        // int arr[]={2,1,5,6,2,3};
+        // maxArea_histogram(arr);
+        Queue q = new Queue();
+        q.add(1);
+        q.add(2);
+        q.add(3);
+        while(!q.isEmpty()){
+            System.out.println(q.peek());
+            q.remove();
+        }
     }
 }
