@@ -1,5 +1,8 @@
 public class Oops{
     public class student{
+        String name;
+        int marks;
+        int roll_no;
         
     }
     
