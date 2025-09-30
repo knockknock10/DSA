@@ -12,6 +12,7 @@ public class Oops{
     }
     
     public static void main(String[] args){
-
+        student s = new student();
+        s.std("kr",234,123);
     }
 }
