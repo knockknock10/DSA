@@ -4,7 +4,9 @@ public class Oops{
         int marks;
         int roll_no;
         void std(String name,int marks, int roll_no){
-            
+            this.name = name;
+            this.marks = marks;
+            this.roll_no = roll_no;
         }
         
     }
