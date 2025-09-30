@@ -8,6 +8,9 @@ public class Oops{
             this.marks = marks;
             this.roll_no = roll_no;
         }
+        void displ(){
+            
+        }
         
     }
     
