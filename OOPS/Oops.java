@@ -9,6 +9,7 @@ public class Oops{
             this.roll_no = roll_no;
         }
         void displ(){
+            System.out.println(this.name);
             
         }
         
