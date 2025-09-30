@@ -3,6 +3,9 @@ public class Oops{
         String name;
         int marks;
         int roll_no;
+        void std(String name,int marks, int roll_no){
+            
+        }
         
     }
     
