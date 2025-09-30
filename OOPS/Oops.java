@@ -11,6 +11,7 @@ public class Oops{
         void displ(){
             System.out.println(this.name);
             System.out.println(this.marks);
+            System.out.println(this.roll_no);
             
         }
         
@@ -19,5 +20,6 @@ public class Oops{
     public static void main(String[] args){
         student s = new student();
         s.std("kr",234,123);
+        displ();
     }
 }
