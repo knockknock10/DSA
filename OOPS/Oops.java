@@ -10,6 +10,7 @@ public class Oops{
         }
         void displ(){
             System.out.println(this.name);
+            System.out.println(this.marks);
             
         }
         
