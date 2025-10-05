@@ -11,6 +11,6 @@ publice static void main(String args[]){
     int a[]={4,1,8,7};
     int b[]={2,3,6,5};
     minabsdi(a,b);
-    //ans 6
+    //ans:6
 
 }
