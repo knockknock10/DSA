@@ -1,3 +1,27 @@
+// Indian coins solution
+    public static void indiancoins() {
+        // to sort in rev order our arr should be as Integer not int
+        Integer coins[] = { 1, 2, 5, 10, 20, 50, 100, 500, 2000 };
+        Arrays.sort(coins, Comparator.reverseOrder());
+        int countofcoins = 0;
+        int amount = 590;
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < coins.length; i++) {
+            if (coins[i] <= amount) {
+                while (coins[i] <= amount) {
+                    countofcoins++;
+                    ans.add(coins[i]);
+                    amount -= coins[i];
+                }
+            }
+        }
+        System.out.println("Minimum no of coins to be give is : " + countofcoins);
+        for (int i = 0; i < ans.size(); i++) {
+            System.out.print(ans.get(i) + " ");
+        }
+    }
+
+
 public static void minabsdi(int a[], int b[]) {
         Arrays.sort(a);
         Arrays.sort(b);
@@ -34,5 +58,7 @@ publice static void main(String args[]){
     minabsdi(a,b);
     //ans:6
         maxhcain();//ans 3
+        indiancoins();//ans Minimum no of coins to be give is : 4
+        //500 50 20 20  
 
 }
