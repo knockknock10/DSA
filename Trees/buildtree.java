@@ -1,7 +1,4 @@
-s
-
-    
-    public class buildtree {
+public class buildtree {
     static class Node {
         int data;
         Node left;
