@@ -4,7 +4,7 @@ public class buildtree {
         Node left;
         Node right;
         Node(int data){
-            this.data = ;
+            this.data = data;
             this.left = null;
             this.right = null;
         }
