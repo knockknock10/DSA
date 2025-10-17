@@ -1,4 +1,6 @@
-sdf
+s
+
+    
     public class buildtree {
     static class Node {
         int data;
