@@ -1,4 +1,5 @@
-public class buildtree {
+sdf
+    public class buildtree {
     static class Node {
         int data;
         Node left;
