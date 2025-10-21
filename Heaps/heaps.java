@@ -14,7 +14,7 @@ public class heaps {
 
         @Override
         public int compareTo(Student s2) {
-            return this.rank - s2.rank
+            return this.rank - s2.rank;
         }
     }
 
