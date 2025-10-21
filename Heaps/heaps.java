@@ -19,7 +19,7 @@ public class heaps {
     }
 
     public static void main(String[] args) {
-        PriorityQueue<Student> pq = new PriorityQueue<>();// Comparator.reverseOrder() for reverse
+        PriorityQueue<Student> pq = new PriorityQueue<>()// Comparator.reverseOrder() for reverse
         pq.add(new Student("A", 4));// O(log n)
         pq.add(new Student("B", 2));
         pq.add(new Student("C", 5));
