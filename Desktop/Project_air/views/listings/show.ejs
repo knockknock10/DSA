@@ -1,0 +1,45 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body class="show">
+        <div class="page-container d-flex flex-column min-vh-100">
+
+            <!-- Main Content -->
+            <div class="content flex-grow-1 container mt-3">
+
+                <h3 class="mb-4 text-center">Listing Details</h3>
+
+                <!-- Card with Image and Info -->
+                <div class="card mb-3 mx-auto listing-card" style="max-width: 610px;">
+                    <img src="<%= listing.image && listing.image.url ? listing.image.url : '/image.png' %>" 
+                    class="card-img-top show-img"
+                        alt="<%= listing.title %>">
+
+                    <div class="card-body">
+                        <h5 class="card-title mb-2">
+                            <%= listing.title %>
+                        </h5>
+                        <p class="card-text mb-2">
+                            <%= listing.description %>
+                        </p>
+
+                        <div class="listing-info ">
+                            <p>Price: &#8377;<%= listing.price.toLocaleString("en-IN") %></p>
+                            <p>Location: <%= listing.location %></p>
+                            <p>Country: <%= listing.country %></p>
+                            
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 mt-3">
+                            <a href="/listings/<%= listing._id %>/edit" class="btn btn-edit">Edit </a>
+                            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-dark delete-btn">Delete </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
