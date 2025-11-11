@@ -151,6 +151,23 @@ public class heaps {
         }
     }
 
+    // Connect N ropes with minimum Cost
+    public static void minRope() {
+        int ropes[] = { 2, 3, 3, 4, 6 };
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < ropes.length; i++) {
+            pq.add(ropes[i]);
+        }
+        int cost = 0;
+        while (pq.size() > 1) {
+            int min = pq.remove();
+            int min2 = pq.remove();
+            cost += min + min2;
+            pq.add(min + min2);
+        }
+        System.out.println("Cost of Connecting ropes : " + cost);
+    }
+
     public static void main(String[] args) {
         // PriorityQueue<Student> pq = new PriorityQueue<>();//
         // Comparator.reverseOrder() for reverse
@@ -191,5 +208,6 @@ public class heaps {
         for (int i = 0; i < k; i++) {
             System.out.println("C" + pq.remove().idx);
         }
+        minRope();
     }
 }
