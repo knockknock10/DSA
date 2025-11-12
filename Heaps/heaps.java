@@ -168,6 +168,26 @@ public class heaps {
         System.out.println("Cost of Connecting ropes : " + cost);
     }
 
+    // Weakest soldier
+    static class Row implements Comparable<Row> {
+        int soldier;
+        int idx;
+
+        public Row(int soldier, int idx) {
+            this.soldier = soldier;
+            this.idx = idx;
+        }
+
+        @Override
+        public int compareTo(Row r2) {
+            if (this.soldier == r2.soldier) {
+                return this.idx - r2.idx;
+            } else {
+                return this.soldier - r2.soldier;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         // PriorityQueue<Student> pq = new PriorityQueue<>();//
         // Comparator.reverseOrder() for reverse
@@ -197,17 +217,33 @@ public class heaps {
         // }
         // System.out.println();
 
-        int pts[][] = { { 3, 3 }, { 5, -1 }, { -2, 4 } };
+        // int pts[][] = { { 3, 3 }, { 5, -1 }, { -2, 4 } };
+        // int k = 2;
+        // PriorityQueue<Point> pq = new PriorityQueue<>();
+        // for (int i = 0; i < pts.length; i++) {
+        // int distsq = pts[i][0] * pts[i][0] + pts[i][1] * pts[i][1];
+        // pq.add(new Point(pts[i][0], pts[i][1], distsq, i));
+        // }
+        // // nearest k cars
+        // for (int i = 0; i < k; i++) {
+        // System.out.println("C" + pq.remove().idx);
+        // }
+        // minRope();
+        int army[][] = { { 1, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 } };
         int k = 2;
-        PriorityQueue<Point> pq = new PriorityQueue<>();
-        for (int i = 0; i < pts.length; i++) {
-            int distsq = pts[i][0] * pts[i][0] + pts[i][1] * pts[i][1];
-            pq.add(new Point(pts[i][0], pts[i][1], distsq, i));
+        PriorityQueue<Row> Pq = new PriorityQueue<>();
+        for (int i = 0; i < army.length; i++) {
+            int count = 0;
+            for (int j = 0; j < army[0].length; i++) {
+                count += army[i][j] == 1 ? 1 : 0;
+            }
+            Pq.add(new Row(count, i));
         }
-        // nearest k cars
         for (int i = 0; i < k; i++) {
-            System.out.println("C" + pq.remove().idx);
+            System.out.println("R" + Pq.remove().idx);
         }
-        minRope();
     }
 }
