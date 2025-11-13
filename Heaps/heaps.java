@@ -188,7 +188,25 @@ public class heaps {
         }
     }
 
-    // Sliding Window
+    // Sliding Window Maximum //O(n logk)
+    static class Pair implements Comparable<Pair> {
+        int val;
+        int idx;
+
+        public Pair(int val, int idx) {
+            this.val = val;
+            this.idx = idx;
+        }
+
+        @Override
+        public int compareTo(Pair p2) {
+            // Ascending
+            // return this.val - p2.val;
+            // Descneding
+            return p2.val - this.val;
+        }
+    }
+
     public static void main(String[] args) {
         // PriorityQueue<Student> pq = new PriorityQueue<>();//
         // Comparator.reverseOrder() for reverse
@@ -230,21 +248,46 @@ public class heaps {
         // System.out.println("C" + pq.remove().idx);
         // }
         // minRope();
-        int army[][] = { { 1, 0, 0, 0 },
-                { 1, 1, 1, 1 },
-                { 1, 0, 0, 0 },
-                { 1, 0, 0, 0 } };
-        int k = 2;
-        PriorityQueue<Row> Pq = new PriorityQueue<>();
-        for (int i = 0; i < army.length; i++) {
-            int count = 0;
-            for (int j = 0; j < army[0].length; i++) {
-                count += army[i][j] == 1 ? 1 : 0;
-            }
-            Pq.add(new Row(count, i));
-        }
+        // int army[][] = { { 1, 0, 0, 0 },
+        // { 1, 1, 1, 1 },
+        // { 1, 0, 0, 0 },
+        // { 1, 0, 0, 0 } };
+        // int k = 2;
+        // PriorityQueue<Row> Pq = new PriorityQueue<>();
+        // for (int i = 0; i < army.length; i++) {
+        // int count = 0;
+        // for (int j = 0; j < army[0].length; i++) {
+        // count += army[i][j] == 1 ? 1 : 0;
+        // }
+        // Pq.add(new Row(count, i));
+        // }
+        // for (int i = 0; i < k; i++) {
+        // System.out.println("R" + Pq.remove().idx);
+        // }
+
+        // sliding window maximum
+        int arr[] = { 1, 3, -1, -3, 5, 3, 6, 7 };
+        int k = 3;
+        int res[] = new int[arr.length - k + 1];
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        // 1st window
         for (int i = 0; i < k; i++) {
-            System.out.println("R" + Pq.remove().idx);
+            pq.add(new Pair(arr[i], i));
         }
+        res[0] = pq.peek().val;
+
+        for (int i = k; i < arr.length; i++) {
+            while (pq.size() > 0 && pq.peek().idx <= (i - k)) {
+                pq.remove();
+            }
+            pq.add(new Pair(arr[i], i));
+            res[i - k + 1] = pq.peek().val;
+        }
+
+        // print
+        for (int i = 0; i < res.length; i++) {
+            System.out.print(res[i] + " ");
+        }
+        System.out.println();
     }
 }
