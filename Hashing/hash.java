@@ -1,6 +1,7 @@
 package Hashing;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class hash {
 
@@ -12,7 +13,7 @@ public class hash {
         hm.put("China", 30);
         hm.put("Us", 300);
 
-        System.out.println(hm);
+        // System.out.println(hm);
         // // Get O(1)
         // int population = hm.get("India");
         // System.out.println(population);
@@ -35,7 +36,17 @@ public class hash {
         // System.out.println(hm.isEmpty()); // not empty so return false
 
         // clear removes all the data from hasmap
-        hm.clear();
-        System.out.println(hm.isEmpty()); // true
+        // hm.clear();
+        // System.out.println(hm.isEmpty()); // true
+
+        // Iterate
+        Set<String> keys = hm.keySet();
+        System.out.println(keys);
+        for (String k : keys) {
+            System.out.println("Key= " + k + ", value= " + hm.get(k));
+        }
+        // or also hm.entrySet();
+        System.out.println(hm.entrySet());
+
     }
 }
