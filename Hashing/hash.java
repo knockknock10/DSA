@@ -47,5 +47,6 @@ public class hash {
         }
         // or also hm.entrySet();
         System.out.println(hm.entrySet());
+
     }
 }
