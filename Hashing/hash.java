@@ -1,17 +1,18 @@
-package Hashing;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class hash {
 
     public static void main(String[] args) {
         // Create
-        HashMap<String, Integer> hm = new HashMap<>();
+        // HashMap<String, Integer> hm = new HashMap<>();
         // Insert O(1)
-        hm.put("India", 100);
-        hm.put("China", 30);
-        hm.put("Us", 300);
+        // hm.put("India", 100);
+        // hm.put("China", 30);
+        // hm.put("Us", 300);
 
         // System.out.println(hm);
         // // Get O(1)
@@ -40,13 +41,24 @@ public class hash {
         // System.out.println(hm.isEmpty()); // true
 
         // Iterate
-        Set<String> keys = hm.keySet();
-        System.out.println(keys);
-        for (String k : keys) {
-            System.out.println("Key= " + k + ", value= " + hm.get(k));
-        }
-        // or also hm.entrySet();
-        System.out.println(hm.entrySet());
+        // Set<String> keys = hm.keySet();
+        // System.out.println(keys);
+        // for (String k : keys) {
+        // System.out.println("Key= " + k + ", value= " + hm.get(k));
+        // }
+        // // or also hm.entrySet();
+        // System.out.println(hm.entrySet());
 
+        LinkedHashMap<String, Integer> lhm = new LinkedHashMap<>();
+        lhm.put("India", 23);
+        lhm.put("China", 980);
+        lhm.put("Us", 768);
+        System.out.println(lhm);
+
+        TreeMap<String, Integer> tm = new TreeMap<>();
+        tm.put("India", 23);
+        tm.put("China", 980);
+        tm.put("Us", 768);
+        System.out.println(tm);
     }
 }

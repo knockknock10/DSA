@@ -38,7 +38,7 @@ public class hashimp {
             int di = 0;
             for (int i = 0; i < ll.size(); i++) {
                 Node node = ll.get(i);
-                if (node.key == key) {
+                if (node.key.equals(key)) { // node.key==key
                     return di;
                 }
                 di++;
@@ -51,14 +51,14 @@ public class hashimp {
             LinkedList<Node> oldbuck[] = buckets;
             buckets = new LinkedList[N * 2];
             N = N * 2;
-            for (int i = 0; i < oldbuck.length; i++) { // intialize with empty linked list
+            for (int i = 0; i < N; i++) { // intialize with empty linked list
                 buckets[i] = new LinkedList<>();
             }
             // nodes-> add in bucket
             for (int i = 0; i < oldbuck.length; i++) {
                 LinkedList<Node> ll = oldbuck[i];
-                for (int j = 0; j < ll.size(); j++) {
-                    Node node = ll.remove();
+                for (Node node : ll) {
+                    // Node node = ll.get(j);
                     put(node.key, node.value);
                 }
             }
