@@ -14,12 +14,14 @@ public class hashimp {
             }
         }
 
-        private int size; // n
+        private int n; // size
+        private int N;
         private LinkedList<Node> buckets[]; // N = buckets.length
 
         @SuppressWarnings("Unchecked") // if not then we have to tell
         public HashMap() {
-            this.size = 4;
+
+            this.N = 4;
             this.buckets = new LinkedList[4];// here what kind of ll type we r using
             for (int i = 0; i < 4; i++) {
                 this.buckets[i] = new LinkedList<>();
@@ -28,12 +30,45 @@ public class hashimp {
 
         private int hashFunction(k key) {
             int hc = key.hashCode(); // 124354 or -132435 anything
-            return Math.abs(hc) % size; // convrt if -ve else let be and return 0 to size-1
+            return Math.abs(hc) % N; // convrt if -ve else let be and return 0 to size-1
+        }
+
+        private int SearchInLL(k key, int bi) {
+            LinkedList<Node> ll = buckets[bi];
+            int di = 0;
+            for (int i = 0; i < ll.size(); i++) {
+                Node node = ll.get(i);
+                if (node.key == key) {
+                    return di;
+                }
+                di++;
+            }
+            return -1;
+        }
+
+        private void rehash() {
+            LinkedList<Node> oldbuck[] = buckets;
+            buckets = new LinkedList[N * 2];
+            N = N * 2;
+            for (int i = 0; i < oldbuck.length; i++) { // intialize with empty linked list
+                buckets[i] = new LinkedList<>();
+            }
         }
 
         public void put(k key, v value) {
             int bi = hashFunction(key); // should be 0 to size-1
-            int di = SearchInLL(key); // valid;-1
+            int di = SearchInLL(key, bi); // valid;-1
+            if (di != -1) {
+                Node node = buckets[bi].get(di); // bucket indx then in that ll indx
+                node.value = value;
+            } else { // if that key doesnot exits
+                buckets[bi].add(new Node(key, value));
+                n++;
+            }
+            double lambda = (double) n / N;
+            if (lambda > 2.0) {
+                rehash();
+            }
         }
 
         public boolean containsKey(k key) {
