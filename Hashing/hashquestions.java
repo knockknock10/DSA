@@ -88,11 +88,50 @@ public class hashquestions {
 
     }
 
+    // Count the Distinct element
+    public static void countdist() {
+        int nums[] = { 4, 3, 2, 5, 6, 7, 3, 4, 2, 1 };
+        HashSet<Integer> set = new HashSet<>();
+        for (int i : nums) {
+            set.add(i);
+        }
+        System.out.println(set.size());
+    }
+
+    public static void unionninter() {
+        int arr1[] = { 7, 3, 9 };
+        int arr2[] = { 6, 3, 9, 2, 9, 4 };
+        LinkedHashSet<Integer> set = new LinkedHashSet<>();
+        for (int i : arr1) {
+            set.add(i);
+        }
+        for (int i : arr2) {
+            set.add(i);
+        }
+        System.out.println("Union : " + set.size());
+        // Intersection
+        set.clear();
+        for (int i : arr1) {
+            set.add(i);
+        }
+        int count = 0;
+        for (int i : arr2) {
+            if (set.contains(i)) {
+                count++;
+                set.remove(i);
+            }
+        }
+        System.out.println("Intersection : " + count);
+
+    }
+
     public static void main(String args[]) {
         // Majorityele();
         // String s = "tulip", t = "lipid";
         // System.out.println(isAnagram(s, t));
-        lhashset();
+        // lhashset();
+        // countdist();
+        unionninter();
 
     }
 }
