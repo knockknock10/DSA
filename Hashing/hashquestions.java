@@ -1,6 +1,47 @@
 import java.util.*;
 
 public class hashquestions {
+    public static void lhashset() {
+        HashSet<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(2);
+        set.add(null);
+        set.add(3);
+
+        set.add(1);
+        System.out.println(set);
+        if (set.contains(2)) {
+            System.out.println("Contains 2");
+        }
+        set.clear();
+        System.out.println(set);
+        System.out.println(set.size());
+        System.out.println("LinkedHashset");
+        LinkedHashSet<String> cities = new LinkedHashSet<>();
+        cities.add("Delhi");
+        cities.add("Bengaluru");
+        cities.add("Mumbai");
+        cities.add("Patna");
+        // iteration by iterator
+        Iterator it = cities.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+        // iterator by for each loop
+        for (String city : cities) {
+            System.out.println(city);
+        }
+        System.out.println(cities);
+        System.out.println("TressSet");
+        TreeSet<String> c = new TreeSet<>();
+        c.add("Delhi");
+        c.add("Bengaluru");
+        c.add("Mumbai");
+        c.add("Patna");
+        System.out.println(c);
+
+    }
+
     // Anagrams
     public static boolean isAnagram(String s, String t) { // O(n)
         if (s.length() != t.length()) {
@@ -48,8 +89,10 @@ public class hashquestions {
     }
 
     public static void main(String args[]) {
-        Majorityele();
-        String s = "tulip", t = "lipid";
-        System.out.println(isAnagram(s, t));
+        // Majorityele();
+        // String s = "tulip", t = "lipid";
+        // System.out.println(isAnagram(s, t));
+        lhashset();
+
     }
 }
