@@ -125,13 +125,43 @@ public class hashquestions {
 
     }
 
+    public static String getstart(HashMap<String, String> ticktes) {
+        HashMap<String, String> revMap = new HashMap<>();
+        for (String key : ticktes.keySet()) {
+            revMap.put(ticktes.get(key), key);// to from
+        }
+        for (String key : ticktes.keySet()) {
+            if (!revMap.containsKey(key)) {
+                return key;
+            }
+        }
+        return null;
+    }
+
+    public static void Itinary() {
+        HashMap<String, String> tickets = new HashMap<>();
+        tickets.put("Chennai", "Bengaluru");
+        tickets.put("Mumbai", "Delhi");
+        tickets.put("Goa", "Chennai");
+        tickets.put("Delhi", "Goa");
+        String start = getstart(tickets);
+        System.out.print(start);
+        for (String key : tickets.keySet()) {
+            System.out.print("->" + tickets.get(start));
+            start = tickets.get(start);
+        }
+
+    }
+
     public static void main(String args[]) {
         // Majorityele();
         // String s = "tulip", t = "lipid";
         // System.out.println(isAnagram(s, t));
         // lhashset();
         // countdist();
-        unionninter();
+
+        // unionninter();
+        Itinary();
 
     }
 }
