@@ -198,7 +198,7 @@ public class hashquestions {
         // unionninter();
         // Itinary();
         // subzero();
-        subk();
+        // subk();
 
     }
 }
