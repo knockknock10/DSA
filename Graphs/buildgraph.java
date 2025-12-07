@@ -54,11 +54,39 @@ public class buildgraph {
                 System.out.print(curr + " ");
                 visit[curr] = true;
                 for (int i = 0; i < graph[curr].size(); i++) {
-                    Edege e = graph[i].get(i);
+                    Edege e = graph[curr].get(i);
                     q.add(e.dest);
                 }
             }
         }
+    }
+
+    public static void dfs(ArrayList<Edege>[] graph, int curr, boolean visit[]) {
+        // visit
+        System.out.print(curr + " ");
+        visit[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edege e = graph[curr].get(i);
+            if (!visit[e.dest]) {
+                dfs(graph, e.dest, visit);
+            }
+        }
+    }
+
+    // O(V+E)
+    public static boolean hasPath(ArrayList<Edege>[] graph, int src, int dest, boolean visit[]) {
+        if (src == dest) {
+            return true;
+        }
+        visit[src] = true;
+        for (int i = 0; i < graph[src].size(); i++) {
+            Edege e = graph[src].get(i);
+            // e.dest = neighbour
+            if (!visit[e.dest] && hasPath(graph, e.dest, dest, visit)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -69,5 +97,8 @@ public class buildgraph {
         ArrayList<Edege>[] graph = new ArrayList[v]; // null ->EMPTY arraylist
         creategraph(graph);
         bfs(graph);
+        dfs(graph, 0, new boolean[v]);
+        System.out.println();
+        System.out.println(hasPath(graph, 0, 4, new boolean[v]));
     }
 }
