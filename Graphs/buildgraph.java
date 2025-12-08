@@ -215,6 +215,30 @@ public class buildgraph {
         return false;
     }
 
+    public static void topsort(ArrayList<Edege>[] graph) {
+        boolean visit[] = new boolean[graph.length];
+        Stack<Integer> s = new Stack<>();
+        for (int i = 0; i < graph.length; i++) {
+            if (!visit[i]) {
+                topsortUtil(graph, i, visit, s);
+            }
+        }
+        while (!s.isEmpty()) {
+            System.out.print(s.pop() + " ");
+        }
+    }
+
+    public static void topsortUtil(ArrayList<Edege>[] graph, int curr, boolean visit[], Stack<Integer> s) {
+        visit[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edege e = graph[curr].get(i);
+            if (!visit[e.dest]) {
+                topsortUtil(graph, e.dest, visit, s);
+            }
+        }
+        s.push(curr);
+    }
+
     public static void main(String[] args) {
         int v = 5;
         // int arr[] = new arr[v]
@@ -228,5 +252,7 @@ public class buildgraph {
         System.out.println(hasPath(graph, 0, 4, new boolean[v]));
         System.out.println(detectcycle(graph));
         System.out.println(isCycle(graph));
+        System.out.println("Topological sorting using Dfs");
+        topsort(graph);
     }
 }
