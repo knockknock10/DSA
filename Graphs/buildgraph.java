@@ -21,20 +21,35 @@ public class buildgraph {
             graph[i] = new ArrayList<>();
         }
 
+        // graph[0].add(new Edege(0, 1, 1));
+
+        // graph[1].add(new Edege(1, 0, 1));
+        // graph[1].add(new Edege(1, 2, 1));
+        // graph[1].add(new Edege(1, 3, 1));
+
+        // graph[2].add(new Edege(2, 1, 1));
+        // graph[2].add(new Edege(2, 3, 1));
+        // graph[2].add(new Edege(2, 4, 1));
+
+        // graph[3].add(new Edege(3, 1, 1));
+        // graph[3].add(new Edege(3, 2, 1));
+
+        // graph[4].add(new Edege(4, 1, 1));
+
         graph[0].add(new Edege(0, 1, 1));
+        graph[0].add(new Edege(0, 2, 1));
+        graph[0].add(new Edege(0, 3, 1));
 
         graph[1].add(new Edege(1, 0, 1));
         graph[1].add(new Edege(1, 2, 1));
-        graph[1].add(new Edege(1, 3, 1));
 
+        graph[2].add(new Edege(2, 0, 1));
         graph[2].add(new Edege(2, 1, 1));
-        graph[2].add(new Edege(2, 3, 1));
-        graph[2].add(new Edege(2, 4, 1));
 
-        graph[3].add(new Edege(3, 1, 1));
-        graph[3].add(new Edege(3, 2, 1));
+        graph[3].add(new Edege(3, 0, 1));
+        graph[3].add(new Edege(3, 4, 1));
 
-        graph[4].add(new Edege(4, 1, 1));
+        graph[4].add(new Edege(4, 3, 1));
 
         // 2's neighbour
         // for (int i = 0; i < graph[2].size(); i++) {
@@ -43,10 +58,27 @@ public class buildgraph {
         // }
     }
 
-    public static void bfs(ArrayList<Edege>[] graph) {
+    // public static void bfs(ArrayList<Edege>[] graph) {
+    // Queue<Integer> q = new LinkedList<>();
+    // boolean visit[] = new boolean[graph.length];
+    // // take a src
+    // q.add(0);
+    // while (!q.isEmpty()) {
+    // int curr = q.remove();
+    // if (!visit[curr]) {
+    // System.out.print(curr + " ");
+    // visit[curr] = true;
+    // for (int i = 0; i < graph[curr].size(); i++) {
+    // Edege e = graph[curr].get(i);
+    // q.add(e.dest);
+    // }
+    // }
+    // }
+    // }
+
+    // For disconnected components
+    public static void bfsUtil(ArrayList<Edege>[] graph, boolean visit[]) {
         Queue<Integer> q = new LinkedList<>();
-        boolean visit[] = new boolean[graph.length];
-        // take a src
         q.add(0);
         while (!q.isEmpty()) {
             int curr = q.remove();
@@ -55,23 +87,56 @@ public class buildgraph {
                 visit[curr] = true;
                 for (int i = 0; i < graph[curr].size(); i++) {
                     Edege e = graph[curr].get(i);
-                    q.add(e.dest);
+                    if (!visit[e.dest]) {
+                        q.add(e.dest);
+                    }
                 }
             }
         }
     }
 
-    public static void dfs(ArrayList<Edege>[] graph, int curr, boolean visit[]) {
-        // visit
+    public static void bfs(ArrayList<Edege>[] graph) {
+        boolean visit[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (!visit[i]) {
+                bfsUtil(graph, visit);
+            }
+        }
+    }
+
+    // for disconnected components
+    public static void DfsUtil(ArrayList<Edege>[] graph, int curr, boolean visit[]) {
         System.out.print(curr + " ");
         visit[curr] = true;
         for (int i = 0; i < graph[curr].size(); i++) {
             Edege e = graph[curr].get(i);
             if (!visit[e.dest]) {
-                dfs(graph, e.dest, visit);
+                DfsUtil(graph, e.dest, visit);
             }
         }
     }
+
+    public static void Dfs(ArrayList<Edege>[] graph) {
+        boolean visit[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (!visit[i]) {
+                DfsUtil(graph, i, visit);
+            }
+        }
+    }
+
+    // For connected components
+    // public static void dfs(ArrayList<Edege>[] graph, int curr, boolean visit[]) {
+    // // visit
+    // System.out.print(curr + " ");
+    // visit[curr] = true;
+    // for (int i = 0; i < graph[curr].size(); i++) {
+    // Edege e = graph[curr].get(i);
+    // if (!visit[e.dest]) {
+    // dfs(graph, e.dest, visit);
+    // }
+    // }
+    // }
 
     // O(V+E)
     public static boolean hasPath(ArrayList<Edege>[] graph, int src, int dest, boolean visit[]) {
@@ -89,6 +154,67 @@ public class buildgraph {
         return false;
     }
 
+    public static boolean detectcycle(ArrayList<Edege>[] graph) {
+        boolean visit[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (!visit[i]) {
+                if (detectcycleUtil(graph, visit, i, -1)) {
+                    return true;
+                    // cycle exists in one loop of parts
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean detectcycleUtil(ArrayList<Edege>[] graph, boolean visit[], int curr, int par) {
+        visit[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edege e = graph[curr].get(i);
+            // Case-3
+            if (!visit[e.dest]) {
+                if (detectcycleUtil(graph, visit, e.dest, curr)) {
+                    return true;
+                }
+            }
+            // Case-1
+            else if (visit[e.dest] && e.dest != par) {
+                return true;
+            } // Case-2 do nothing continue
+        }
+        return false;
+    }
+
+    // Check for undirected graph if cycle exits
+    public static boolean isCycle(ArrayList<Edege>[] graph) {
+        boolean visit[] = new boolean[graph.length];
+        boolean stack[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (!visit[i]) {
+                if (isCycleUtil(graph, i, visit, stack)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean isCycleUtil(ArrayList<Edege>[] graph, int curr, boolean visit[], boolean stack[]) {
+        visit[curr] = true;
+        stack[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edege e = graph[curr].get(i);
+            if (stack[e.dest]) { // cycle neigh
+                return true;
+            }
+            if (!visit[e.dest] && isCycleUtil(graph, e.dest, visit, stack)) {
+                return true;
+            }
+        }
+        stack[curr] = false;
+        return false;
+    }
+
     public static void main(String[] args) {
         int v = 5;
         // int arr[] = new arr[v]
@@ -96,9 +222,11 @@ public class buildgraph {
         @SuppressWarnings("unchecked")
         ArrayList<Edege>[] graph = new ArrayList[v]; // null ->EMPTY arraylist
         creategraph(graph);
-        bfs(graph);
-        dfs(graph, 0, new boolean[v]);
+        // bfs(graph);
+        // dfs(graph, 0, new boolean[v]);
         System.out.println();
         System.out.println(hasPath(graph, 0, 4, new boolean[v]));
+        System.out.println(detectcycle(graph));
+        System.out.println(isCycle(graph));
     }
 }
