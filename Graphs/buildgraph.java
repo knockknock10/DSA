@@ -185,7 +185,7 @@ public class buildgraph {
         return false;
     }
 
-    // Check for undirected graph if cycle exits
+    // Check for Directed graph if cycle exits
     public static boolean isCycle(ArrayList<Edege>[] graph) {
         boolean visit[] = new boolean[graph.length];
         boolean stack[] = new boolean[graph.length];
@@ -237,6 +237,38 @@ public class buildgraph {
             }
         }
         s.push(curr);
+    }
+
+    public static void calcindeg(ArrayList<Edege>[] graph, int indeg[]) {
+        for (int i = 0; i < graph.length; i++) {
+            int v = i;
+            for (int j = 0; j < graph[v].size(); j++) {
+                Edege e = graph[v].get(j);
+                indeg[e.dest]++;
+            }
+        }
+    }
+
+    public static void topsortbfs(ArrayList<Edege>[] graph) {
+        int indeg[] = new int[graph.length];
+        Queue<Integer> q = new LinkedList<>();
+        calcindeg(graph, indeg);
+        for (int i = 0; i < indeg.length; i++) {
+            if (indeg[i] == 0) {
+                q.add(i);
+            }
+        }
+        while (!q.isEmpty()) {
+            int curr = q.remove();
+            System.out.println(curr + " ");
+            for (int i = 0; i < graph[curr].size(); i++) {
+                Edege e = graph[curr].get(i);
+                indeg[e.dest]--;
+                if (indeg[e.dest] == 0) {
+                    q.add(e.dest);
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
