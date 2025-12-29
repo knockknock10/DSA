@@ -72,18 +72,29 @@ public class trie {
     // curr.eow = true;
     // }
 
-    // public static boolean search(String key) {
-    // Node curr = root;
-    // for (int level = 0; level < key.length(); level++) {
-    // int idx = key.charAt(level) - 'a';
-    // if (curr.children[idx] == null) {
-    // return false;
-    // }
-    // curr = curr.children[idx];
-    // }
-    // return curr.eow == true;
-    // }
+    public static boolean search(String key) {
+        Node curr = root;
+        for (int level = 0; level < key.length(); level++) {
+            int idx = key.charAt(level) - 'a';
+            if (curr.children[idx] == null) {
+                return false;
+            }
+            curr = curr.children[idx];
+        }
+        return curr.eow == true;
+    }
 
+    public static boolean startsWith(String prefix) {
+        Node curr = root;
+        for (int i = 0; i < prefix.length(); i++) {
+            int idx = prefix.charAt(i) - 'a';
+            if (curr.children[idx] == null) {
+                return false;
+            }
+            curr = curr.children[idx];
+        }
+        return true;
+    }
     // public static boolean wordbreak(String key) { // O(L)
     // if (key.length() == 0) {
     // return true;
@@ -98,6 +109,8 @@ public class trie {
     // }
     // return false;
     // }
+
+    // startWith Problem
 
     public static void main(String[] args) {
         // String word[] = { "the", "a", "there", "their", "any", "thee" };
@@ -114,12 +127,20 @@ public class trie {
         // System.out.println(wordbreak(key));
 
         // prefix problem
-        String arr[] = { "zebra", "dog", "duck", "dove" };
-        for (int i = 0; i < arr.length; i++) {
-            insert(arr[i]);
+        // String arr[] = { "zebra", "dog", "duck", "dove" };
+        // for (int i = 0; i < arr.length; i++) {
+        // insert(arr[i]);
+        // }
+        // root.freq = -1;
+        // findprefix(root, "");
+        String words[] = { "apple", "app", "mango", "man", "women" };
+        String prefix1 = "app";
+        String prefix2 = "moon";
+        for (int i = 0; i < words.length; i++) {
+            insert(words[i]);
         }
-        root.freq = -1;
-        findprefix(root, "");
+        System.out.println(startsWith(prefix1));
+        System.out.println(startsWith(prefix2));
 
     }
 }
