@@ -84,6 +84,7 @@ public class trie {
         return curr.eow == true;
     }
 
+    // startWith Problem
     public static boolean startsWith(String prefix) {
         Node curr = root;
         for (int i = 0; i < prefix.length(); i++) {
@@ -110,7 +111,20 @@ public class trie {
     // return false;
     // }
 
-    // startWith Problem
+    // Count uinque Substring
+    public static int coutnNodes(Node root) {
+        int count = 0;
+        if (root == null) {
+            return 0;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (root.children[i] != null) {
+                count += coutnNodes(root.children[i]);
+            }
+
+        }
+        return count + 1;
+    }
 
     public static void main(String[] args) {
         // String word[] = { "the", "a", "there", "their", "any", "thee" };
@@ -133,14 +147,21 @@ public class trie {
         // }
         // root.freq = -1;
         // findprefix(root, "");
-        String words[] = { "apple", "app", "mango", "man", "women" };
-        String prefix1 = "app";
-        String prefix2 = "moon";
-        for (int i = 0; i < words.length; i++) {
-            insert(words[i]);
-        }
-        System.out.println(startsWith(prefix1));
-        System.out.println(startsWith(prefix2));
+        // String words[] = { "apple", "app", "mango", "man", "women" };
+        // String prefix1 = "app";
+        // String prefix2 = "moon";
+        // for (int i = 0; i < words.length; i++) {
+        // insert(words[i]);
+        // }
+        // System.out.println(startsWith(prefix1));
+        // System.out.println(startsWith(prefix2));
 
+        // Count Unique Substring
+        String str = "ababa";
+        for (int i = 0; i < str.length(); i++) {
+            String suffix = str.substring(i);
+            insert(suffix);
+        }
+        System.out.println(coutnNodes(root));
     }
 }
