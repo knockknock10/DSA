@@ -126,6 +126,27 @@ public class trie {
         return count + 1;
     }
 
+    public static String ans = "";
+
+    public static void longest_word(Node root, StringBuilder temp) {
+        if (root == null) {
+            return;
+        }
+        for (int i = 0; i < 26; i++) { // for smaller lexico for larger just make the loop opposite
+            if (root.children[i] != null && root.children[i].eow == true) {
+                char ch = (char) (i + 'a');
+                temp.append(ch);
+                if (temp.length() > ans.length()) {
+                    ans = temp.toString();
+                }
+                longest_word(root.children[i], temp);
+                // backtrack
+                temp.deleteCharAt(temp.length() - 1);
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
         // String word[] = { "the", "a", "there", "their", "any", "thee" };
         // for (int i = 0; i < word.length; i++) {
@@ -157,11 +178,17 @@ public class trie {
         // System.out.println(startsWith(prefix2));
 
         // Count Unique Substring
-        String str = "ababa";
-        for (int i = 0; i < str.length(); i++) {
-            String suffix = str.substring(i);
-            insert(suffix);
+        // String str = "ababa";
+        // for (int i = 0; i < str.length(); i++) {
+        // String suffix = str.substring(i);
+        // insert(suffix);
+        // }
+        // System.out.println(coutnNodes(root));
+        String words[] = { "a", "banana", "app", "appl", "ap", "apply", "apple" };
+        for (int i = 0; i < words.length; i++) {
+            insert(words[i]);
         }
-        System.out.println(coutnNodes(root));
+        longest_word(root, new StringBuilder(""));
+        System.out.println(ans);
     }
 }
