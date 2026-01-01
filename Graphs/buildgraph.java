@@ -20,6 +20,16 @@ public class buildgraph {
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<>();
         }
+        graph[0].add(new Edege(0, 3, 1));
+        graph[2].add(new Edege(2, 3, 1));
+
+        graph[3].add(new Edege(3, 1, 1));
+
+        graph[4].add(new Edege(4, 0, 1));
+        graph[4].add(new Edege(4, 1, 1));
+
+        graph[5].add(new Edege(5, 0, 1));
+        graph[5].add(new Edege(5, 2, 1));
 
         // graph[0].add(new Edege(0, 1, 1));
 
@@ -36,20 +46,20 @@ public class buildgraph {
 
         // graph[4].add(new Edege(4, 1, 1));
 
-        graph[0].add(new Edege(0, 1, 1));
-        graph[0].add(new Edege(0, 2, 1));
-        graph[0].add(new Edege(0, 3, 1));
+        // graph[0].add(new Edege(0, 1, 1));
+        // graph[0].add(new Edege(0, 2, 1));
+        // graph[0].add(new Edege(0, 3, 1));
 
-        graph[1].add(new Edege(1, 0, 1));
-        graph[1].add(new Edege(1, 2, 1));
+        // graph[1].add(new Edege(1, 0, 1));
+        // graph[1].add(new Edege(1, 2, 1));
 
-        graph[2].add(new Edege(2, 0, 1));
-        graph[2].add(new Edege(2, 1, 1));
+        // graph[2].add(new Edege(2, 0, 1));
+        // graph[2].add(new Edege(2, 1, 1));
 
-        graph[3].add(new Edege(3, 0, 1));
-        graph[3].add(new Edege(3, 4, 1));
+        // graph[3].add(new Edege(3, 0, 1));
+        // graph[3].add(new Edege(3, 4, 1));
 
-        graph[4].add(new Edege(4, 3, 1));
+        // graph[4].add(new Edege(4, 3, 1));
 
         // 2's neighbour
         // for (int i = 0; i < graph[2].size(); i++) {
@@ -271,8 +281,22 @@ public class buildgraph {
         }
     }
 
+    public static String path = "";
+
+    public static void allapth(ArrayList<Edege>[] graph, int src, int dest, String path) {
+        if (src == dest) {
+            System.out.println(path + dest);
+            return;
+        }
+        for (int i = 0; i < graph[src].size(); i++) {
+            Edege e = graph[src].get(i);
+            allapth(graph, e.dest, dest, path + src);
+        }
+
+    }
+
     public static void main(String[] args) {
-        int v = 5;
+        int v = 6;
         // int arr[] = new arr[v]
         // array of arraylist
         @SuppressWarnings("unchecked")
@@ -280,11 +304,14 @@ public class buildgraph {
         creategraph(graph);
         // bfs(graph);
         // dfs(graph, 0, new boolean[v]);
-        System.out.println();
-        System.out.println(hasPath(graph, 0, 4, new boolean[v]));
-        System.out.println(detectcycle(graph));
-        System.out.println(isCycle(graph));
-        System.out.println("Topological sorting using Dfs");
-        topsort(graph);
+        // System.out.println();
+        // System.out.println(hasPath(graph, 0, 4, new boolean[v]));
+        // System.out.println(detectcycle(graph));
+        // System.out.println(isCycle(graph));
+        // System.out.println("Topological sorting using Dfs");
+        // topsort(graph);
+
+        int src = 5, dest = 1;
+        allapth(graph, src, dest, path);
     }
 }
