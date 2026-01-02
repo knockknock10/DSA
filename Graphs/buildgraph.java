@@ -20,19 +20,31 @@ public class buildgraph {
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<>();
         }
-        // dijkstra's
+        // Bellman ford Algorithm
         graph[0].add(new Edege(0, 1, 2));
         graph[0].add(new Edege(0, 2, 4));
 
-        graph[1].add(new Edege(1, 3, 7));
-        graph[1].add(new Edege(1, 2, 1));
+        graph[1].add(new Edege(1, 2, -4));
 
-        graph[2].add(new Edege(2, 4, 3));
+        graph[2].add(new Edege(2, 3, 2));
 
-        graph[3].add(new Edege(3, 5, 1));
+        graph[3].add(new Edege(3, 4, 4));
 
-        graph[4].add(new Edege(4, 3, 2));
-        graph[4].add(new Edege(4, 5, 5));
+        graph[4].add(new Edege(4, 1, -1));
+
+        // // dijkstra's
+        // graph[0].add(new Edege(0, 1, 2));
+        // graph[0].add(new Edege(0, 2, 4));
+
+        // graph[1].add(new Edege(1, 3, 7));
+        // graph[1].add(new Edege(1, 2, 1));
+
+        // graph[2].add(new Edege(2, 4, 3));
+
+        // graph[3].add(new Edege(3, 5, 1));
+
+        // graph[4].add(new Edege(4, 3, 2));
+        // graph[4].add(new Edege(4, 5, 5));
 
         // all path source to dest
         // graph[0].add(new Edege(0, 3, 1));
@@ -358,13 +370,64 @@ public class buildgraph {
         System.out.println();
     }
 
+    public static void creategraph2(ArrayList<Edege> graph) {
+
+        // Bellman ford Algorithm
+        graph.add(new Edege(0, 1, 2));
+        graph.add(new Edege(0, 2, 4));
+
+        graph.add(new Edege(1, 2, -4));
+
+        graph.add(new Edege(2, 3, 2));
+
+        graph.add(new Edege(3, 4, 4));
+
+        graph.add(new Edege(4, 1, -1));
+    }
+
+    // Bellman_ford Algorithm
+    public static void BellmanFord2(ArrayList<Edege> graph, int src, int V) { // graph[]
+        int dist[] = new int[V];
+        for (int i = 0; i < dist.length; i++) {
+            if (i != src) {
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        // O(V*E)
+        // algo O(V)
+        for (int i = 0; i < V - 1; i++) {
+            // edeges O(E)
+            for (int j = 0; j < graph.size(); j++) { // all vertex
+
+                Edege e = graph.get(j);
+                // u,v,wt
+                int u = e.src;
+                int v = e.dest;
+                int wt = e.wt;
+                // relaxation
+                if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) {
+                    dist[v] = dist[u] + wt;
+                }
+
+            }
+        }
+        // print
+        for (
+
+                int i = 0; i < dist.length; i++) {
+            System.out.print(dist[i] + " ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
-        int v = 6;
+        int v = 5;
         // int arr[] = new arr[v]
         // array of arraylist
         @SuppressWarnings("unchecked")
-        ArrayList<Edege>[] graph = new ArrayList[v]; // null ->EMPTY arraylist
-        creategraph(graph);
+        // ArrayList<Edege>[] graph = new ArrayList[v]; // null ->EMPTY arraylist
+        // creategraph(graph);
         // bfs(graph);
         // dfs(graph, 0, new boolean[v]);
         // System.out.println();
@@ -377,8 +440,11 @@ public class buildgraph {
         // int src = 5, dest = 1;
         // allapth(graph, src, dest, path);
         // Dijkstra's
-        int src = 0;
-        dijkstra(graph, src);
-
+        // int src = 0;
+        // dijkstra(graph, src);
+        ArrayList<Edege> graph = new ArrayList<>();
+        creategraph2(graph);
+        // BellmanFord(graph, 0);
+        BellmanFord2(graph, 0, v);
     }
 }
