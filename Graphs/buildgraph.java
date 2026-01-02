@@ -20,16 +20,31 @@ public class buildgraph {
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<>();
         }
-        graph[0].add(new Edege(0, 3, 1));
-        graph[2].add(new Edege(2, 3, 1));
+        // dijkstra's
+        graph[0].add(new Edege(0, 1, 2));
+        graph[0].add(new Edege(0, 2, 4));
 
-        graph[3].add(new Edege(3, 1, 1));
+        graph[1].add(new Edege(1, 3, 7));
+        graph[1].add(new Edege(1, 2, 1));
 
-        graph[4].add(new Edege(4, 0, 1));
-        graph[4].add(new Edege(4, 1, 1));
+        graph[2].add(new Edege(2, 4, 3));
 
-        graph[5].add(new Edege(5, 0, 1));
-        graph[5].add(new Edege(5, 2, 1));
+        graph[3].add(new Edege(3, 5, 1));
+
+        graph[4].add(new Edege(4, 3, 2));
+        graph[4].add(new Edege(4, 5, 5));
+
+        // all path source to dest
+        // graph[0].add(new Edege(0, 3, 1));
+        // graph[2].add(new Edege(2, 3, 1));
+
+        // graph[3].add(new Edege(3, 1, 1));
+
+        // graph[4].add(new Edege(4, 0, 1));
+        // graph[4].add(new Edege(4, 1, 1));
+
+        // graph[5].add(new Edege(5, 0, 1));
+        // graph[5].add(new Edege(5, 2, 1));
 
         // graph[0].add(new Edege(0, 1, 1));
 
@@ -295,6 +310,54 @@ public class buildgraph {
 
     }
 
+    // Dijkstra's
+    static class Pair implements Comparable<Pair> {
+        int n;
+        int path;
+
+        public Pair(int n, int path) {
+            this.n = n;
+            this.path = path;
+        }
+
+        @Override
+        public int compareTo(Pair p2) {
+            return this.path - p2.path; // path based sorting for my pairs
+        }
+    }
+
+    public static void dijkstra(ArrayList<Edege> graph[], int src) {
+        int dist[] = new int[graph.length]; // dist[i] ->src to i
+        for (int i = 0; i < graph.length; i++) {
+            if (i != src) {
+                dist[i] = Integer.MAX_VALUE; // +infinity
+            }
+        }
+        boolean visit[] = new boolean[graph.length];
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.add(new Pair(src, 0)); // src to src tak ka pair
+        while (!pq.isEmpty()) {
+            Pair curr = pq.remove();
+            if (!visit[curr.n]) {
+                visit[curr.n] = true;
+                for (int i = 0; i < graph[curr.n].size(); i++) {
+                    Edege e = graph[curr.n].get(i);
+                    int u = e.src;
+                    int v = e.dest;
+                    int wt = e.wt;
+                    if (dist[u] + wt < dist[v]) { // update distance src to v
+                        dist[v] = dist[u] + wt;
+                        pq.add(new Pair(v, dist[v]));
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < dist.length; i++) {
+            System.out.print(dist[i] + "");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         int v = 6;
         // int arr[] = new arr[v]
@@ -310,8 +373,12 @@ public class buildgraph {
         // System.out.println(isCycle(graph));
         // System.out.println("Topological sorting using Dfs");
         // topsort(graph);
+        // all path from source to dest
+        // int src = 5, dest = 1;
+        // allapth(graph, src, dest, path);
+        // Dijkstra's
+        int src = 0;
+        dijkstra(graph, src);
 
-        int src = 5, dest = 1;
-        allapth(graph, src, dest, path);
     }
 }
