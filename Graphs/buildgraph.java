@@ -20,17 +20,31 @@ public class buildgraph {
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<>();
         }
+        // MST
+        graph[0].add(new Edege(0, 1, 10));
+        graph[0].add(new Edege(0, 2, 15));
+        graph[0].add(new Edege(0, 3, 30));
+
+        graph[1].add(new Edege(1, 0, 10));
+        graph[1].add(new Edege(1, 3, 40));
+
+        graph[2].add(new Edege(2, 0, 15));
+        graph[2].add(new Edege(2, 3, 50));
+
+        graph[3].add(new Edege(3, 1, 40));
+        graph[3].add(new Edege(3, 2, 50));
+
         // Bellman ford Algorithm
-        graph[0].add(new Edege(0, 1, 2));
-        graph[0].add(new Edege(0, 2, 4));
+        // graph[0].add(new Edege(0, 1, 2));
+        // graph[0].add(new Edege(0, 2, 4));
 
-        graph[1].add(new Edege(1, 2, -4));
+        // graph[1].add(new Edege(1, 2, -4));
 
-        graph[2].add(new Edege(2, 3, 2));
+        // graph[2].add(new Edege(2, 3, 2));
 
-        graph[3].add(new Edege(3, 4, 4));
+        // graph[3].add(new Edege(3, 4, 4));
 
-        graph[4].add(new Edege(4, 1, -1));
+        // graph[4].add(new Edege(4, 1, -1));
 
         // // dijkstra's
         // graph[0].add(new Edege(0, 1, 2));
@@ -413,21 +427,51 @@ public class buildgraph {
             }
         }
         // print
-        for (
-
-                int i = 0; i < dist.length; i++) {
+        for (int i = 0; i < dist.length; i++) {
             System.out.print(dist[i] + " ");
         }
         System.out.println();
     }
-
+    static class Pair1 implements Comparable<Pair1>{
+        int v;
+        int cost;
+        
+        public Pair1(int v,int cost){
+            this.v = v;
+            this.cost = cost;
+        }
+        @Override
+        public int compareTo(Pair1 p2){
+            return this.cost - p2.cost;
+        }
+    }
+    public static void MST_prims(ArrayList<Edege> graph[]){
+        boolean visit[] = new boolean[graph.length];
+        PriorityQueue<Pair1> pq = new PriorityQueue<>();
+        pq.add(new Pair1(0, 0));
+        int finaCost = 0;       //Mst cost/total min weight
+        while(!pq.isEmpty()){
+            Pair1 curr = pq.remove();
+            if(!visit[curr.v]){
+                visit[curr.v] = true;
+                finaCost+=curr.cost;
+                for(int i=0;i<graph[curr.v].size();i++){
+                    Edege e = graph[curr.v].get(i);
+                    pq.add(new Pair1(e.dest, e.wt));
+                }
+                
+            }
+            
+        }
+        System.out.println("Final cost of Mst : "+finaCost);
+    }
     public static void main(String[] args) {
         int v = 5;
         // int arr[] = new arr[v]
         // array of arraylist
         @SuppressWarnings("unchecked")
-        // ArrayList<Edege>[] graph = new ArrayList[v]; // null ->EMPTY arraylist
-        // creategraph(graph);
+        ArrayList<Edege>[] graph = new ArrayList[v]; // null ->EMPTY arraylist
+        creategraph(graph);
         // bfs(graph);
         // dfs(graph, 0, new boolean[v]);
         // System.out.println();
@@ -442,9 +486,10 @@ public class buildgraph {
         // Dijkstra's
         // int src = 0;
         // dijkstra(graph, src);
-        ArrayList<Edege> graph = new ArrayList<>();
-        creategraph2(graph);
+        // ArrayList<Edege> graph = new ArrayList<>();
+        // creategraph2(graph);
         // BellmanFord(graph, 0);
-        BellmanFord2(graph, 0, v);
+        // BellmanFord2(graph, 0, v);
+        MST_prims(graph);
     }
 }
