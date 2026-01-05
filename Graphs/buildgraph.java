@@ -13,7 +13,6 @@ public class buildgraph {
             this.wt = wt;
         }
     }
-
     public static void creategraph(ArrayList<Edege> graph[]) {
 
         for (int i = 0; i < graph.length; i++) {
