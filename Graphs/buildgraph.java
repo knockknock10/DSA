@@ -463,6 +463,7 @@ public class buildgraph {
         }
         System.out.println("Final cost of Mst : "+finaCost);
     }
+    
     // Cheapest Connecting Flight Problem #727
     static class Edege1 {
          int src;
