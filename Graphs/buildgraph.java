@@ -537,6 +537,42 @@ public class buildgraph {
         
         
     }
+    //Connecting cities (Prims algo)
+    static class  Edege2 implements Comparable<Edege2>{
+        int dest;
+        int cost;
+        public Edege2(int d,int c){
+            this.dest = d;
+            this.cost = c;
+        }
+        @Override
+        public int compareTo(Edege2 e2){
+            return this.cost-e2.cost;
+        }
+    }
+    public static int connectCities(int cities[][]){
+        PriorityQueue<Edege2> pq = new PriorityQueue<>();
+        boolean visit[] = new boolean[cities.length];
+        
+        pq.add(new Edege2(0, 0));
+        int finaCost = 0;
+        
+        while(!pq.isEmpty()){
+            Edege2 curr = pq.remove();
+            if(!visit[curr.dest]){
+                if(!visit[curr.dest]){
+                    visit[curr.dest] = true;
+                    finaCost+=curr.cost;
+                }
+                for(int i=0;i<cities[curr.dest].length;i++){
+                    if(cities[curr.dest][i]!=0){
+                        pq.add(new Edege2(i, cities[curr.dest][i]));
+                    }
+                }
+            }
+        }
+        return finaCost;
+    }
     public static void main(String[] args) {
         int v = 5;
         // int arr[] = new arr[v]
@@ -565,10 +601,18 @@ public class buildgraph {
         // MST_prims(graph);
         
         //Cheapest flight
-        int n =4;
-        int flights[][] = {{0,1,100},{1,2,100},{2,0,100},{1,3,600},{2,3,200}};
-        int src =0,dst = 3,k =1;
-        System.out.println(CheapestFlight(n, flights, src, dst, k));
+        // int n =4;
+        // int flights[][] = {{0,1,100},{1,2,100},{2,0,100},{1,3,600},{2,3,200}};
+        // int src =0,dst = 3,k =1;
+        // System.out.println(CheapestFlight(n, flights, src, dst, k));
+         int cities[][] = {
+            {0, 1, 2, 3, 4},
+            {1, 0, 5, 0, 7},
+            {2, 5, 0, 6, 0},
+            {3, 0, 6, 0, 0},
+            {4, 7, 0, 0, 0}
+        };
+        System.out.println(connectCities(cities));
     }
     
 }
