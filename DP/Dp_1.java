@@ -1,5 +1,5 @@
 package DP;
-
+import java.util.Arrays;
 public class Dp_1{
     //fibonacii by memoization
     public static int fib(int n,int f[]){
@@ -23,7 +23,7 @@ public class Dp_1{
         return dp[n];
     
     }
-    //Climbing Stairs
+    //Climbing Stairs  T.C O(2^n)
     public static int countways(int n){
         if(n==0){
             return 1;
@@ -33,11 +33,30 @@ public class Dp_1{
         }
         return countways(n-1)+countways(n-2);
     }
+    //Climbing stairs memoization  TC O(n)
+    public static int countwaysmemo(int n,int ways[]){
+        
+        if(n==0){
+            return 1;
+        }
+        if(n<0){
+            return 0;
+        }
+        if(ways[n]!=-1){  //already calc
+            return ways[n];
+        }
+        ways[n] = countwaysmemo(n-1,ways)+countwaysmemo(n-2,ways);
+        return ways[n];
+        
+    }
     public static void main(String[] args) {
         int n = 5;
         int f[] = new int[n+1];
+        int ways[] = new int[n+1];
+        Arrays.fill(ways,-1);
         System.out.println(fib(n, f));
         System.out.println(fibs(n));
         System.out.println(countways(n));
+        System.out.println(countwaysmemo(n,ways));
     }
 }
