@@ -76,6 +76,26 @@ public class Dp_1{
             return knapsack(val, wt, W, n-1);
         }
     }
+    // 0-1 knapsack by memoization   TC O(nW)
+    public static int knapsackmemo(int val[],int wt[],int W,int n,int dp[][]){
+        if(W==0 || n==0){
+            return 0;
+        }
+        if(dp[n][W]!=-1){
+            return dp[n][W];
+        }
+        if(wt[n-1]<=W){
+            //include
+            int ans1 = val[n-1]+knapsackmemo(val, wt, W-wt[n-1], n-1,dp);
+            //exclude
+            int ans2 = knapsackmemo(val, wt, W, n-1, dp);
+            dp[n][W] = Math.max(ans1, ans2);
+            return dp[n][W];
+        }else{
+            dp[n][W] = knapsackmemo(val, wt, W, n-1, dp);
+            return dp[n][W];
+        }
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -91,6 +111,17 @@ public class Dp_1{
         int W = 7;
         int no = val.length;
         System.out.println(knapsack(val, wt, W, no));
-        
+        int dp[][] = new int[no+1][W+1];
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[0].length;j++){
+                dp[i][j] = -1;
+            }
+        }
+        System.out.println(knapsackmemo(val, wt, W, no, dp));
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[0].length;j++){
+                System.out.print(dp[i][j]+" ");
+            }System.out.println();
+        }System.out.println();
     }
 }
