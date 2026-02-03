@@ -96,6 +96,13 @@ public class Dp_1{
             return dp[n][W];
         }
     }
+    public static void print(int dp[][]){
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[0].length;j++){
+                System.out.print(dp[i][j]+" ");
+            }System.out.println();
+        }System.out.println();
+    }
     public static int knapsackTab(int val[],int wt[],int W){
         int n = val.length;
         int dp[][] = new int[n+1][W+1];
@@ -119,6 +126,7 @@ public class Dp_1{
                 }
             }
         }
+        print(dp);
         return dp[n][W];
     }
     public static void main(String[] args) {
