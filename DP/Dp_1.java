@@ -206,6 +206,31 @@ public class Dp_1{
         }
         return dp[n][sum];
     }
+    //Rod cutting probelm TC O(n*tot)
+    //wight = length val = price W = totRod
+    public static int RodCutting(int length[],int price[],int tot){
+        int n = length.length;
+        int dp[][] = new int[n+1][tot+1];
+        //by default ther eis initializaton of 0 
+        // for(int i=0;i<n+1;i++){
+        //     for(int j=0;j<tot+1;j++){
+        //         if(i==0 || j==0){
+        //             dp[i][j] = 0;
+        //         }
+        //     }
+        // }
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<tot+1;j++){
+                if(length[i-1]<=j){
+                    dp[i][j] = Math.max(price[i-1]+dp[i][j-length[i-1]],dp[i-1][j]);
+                }else{
+                    //invalid
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][tot];
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -243,9 +268,13 @@ public class Dp_1{
         // System.out.println(UnboundedKnapsack(val,wt,W));
         //int coins[] = {1,2,3};
         //int sum = 4; //ans = 4;
-        int coins[] = {2,5,3,6};
-        int sum = 10;
+        // int coins[] = {2,5,3,6};
+        // int sum = 10;
         
-        System.out.println(coinChange(coins, sum));
+        // System.out.println(coinChange(coins, sum));
+        int length[] = {1,2,3,4,5,6,7,8};
+        int price[] = {1,5,8,9,10,17,17,20};
+        int rodLength = 8;
+        System.out.println(RodCutting(length, price, rodLength));
     }
 }
