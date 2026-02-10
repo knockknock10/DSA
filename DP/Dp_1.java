@@ -231,6 +231,19 @@ public class Dp_1{
         }
         return dp[n][tot];
     }
+    //largest common subseqence
+    public static int lcs(String str1,String str2,int n,int m){
+        if(n==0 ||m ==0){
+            return 0;
+        }
+        if(str1.charAt(n-1)==str2.charAt(m-1)){//same
+            return lcs(str1, str2, n-1, m-1)+1;
+        }else{ //diff
+            int ans1 = lcs(str1, str2, n-1, m);
+            int ans2 = lcs(str1, str2, n, m-1);
+            return Math.max(ans1,ans2);
+        }
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -272,9 +285,13 @@ public class Dp_1{
         // int sum = 10;
         
         // System.out.println(coinChange(coins, sum));
-        int length[] = {1,2,3,4,5,6,7,8};
-        int price[] = {1,5,8,9,10,17,17,20};
-        int rodLength = 8;
-        System.out.println(RodCutting(length, price, rodLength));
+        // int length[] = {1,2,3,4,5,6,7,8};
+        // int price[] = {1,5,8,9,10,17,17,20};
+        // int rodLength = 8;
+        // System.out.println(RodCutting(length, price, rodLength));
+        String str1 = "abcdge";
+        String str2 = "abedg";//lcs = "abdg";length = 4
+        System.out.println(lcs(str1, str2, str1.length(),str2.length()));
+        
     }
 }
