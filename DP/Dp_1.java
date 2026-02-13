@@ -284,6 +284,34 @@ public class Dp_1{
         return dp[n][m];
         
     }
+    //TC O(n*m)
+    public static int longestCommonSubstr(String str1,String str2){
+        int n = str1.length();
+        int m = str2.length();
+        int dp[][] = new int[n+1][m+1];
+        int ans = 0;
+        
+        //initialize
+        for(int i=0;i<n+1;i++){
+            dp[i][0]=0;
+        }
+        for(int j=0;j<m+1;j++){
+            dp[0][j] =0;
+        }
+        //bottom up
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<m+1;j++){
+                if(str1.charAt(i-1)==str2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1]+1;
+                    ans = Math.max(ans, dp[i][j]);
+                }else{
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        return ans;
+        
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -341,7 +369,8 @@ public class Dp_1{
         //     }
         // }
         // System.out.println(lcsmemo(str1, str2,str1.length(),str2.length(), dp));   
-        System.out.println(lcsTab(str1, str2));
+        // System.out.println(lcsTab(str1, str2));
+        System.out.println(longestCommonSubstr(str1, str2));
         
         
     }
