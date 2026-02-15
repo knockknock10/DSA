@@ -1,5 +1,6 @@
 package DP;
 import java.util.Arrays;
+import java.util.HashSet;
 public class Dp_1{
     //fibonacii by memoization
     public static int fib(int n,int f[]){
@@ -311,6 +312,46 @@ public class Dp_1{
         }
         return ans;
         
+    } 
+    public static int lics(int arr[],int arr2[]){
+        int n = arr.length;
+        int m = arr2.length;
+        int dp[][] = new int[n+1][m+1];
+        
+        for(int i=0;i<n+1;i++){
+            dp[i][0] = 0;
+        }
+        for(int j=0;j<m+1;j++){
+            dp[0][j] = 0;
+        }
+        
+        for(int i =1;i<n+1;i++){
+            for(int j= 1;j<m+1;j++){
+                if(arr[i-1]==arr2[j-1]){
+                    dp[i][j] = dp[i-1][j-1]+1;
+                }else{
+                    int ans1 = dp[i-1][j];
+                    int ans2 = dp[i][j-1];
+                    dp[i][j] = Math.max(ans1, ans2);
+                }
+            }
+        }return dp[n][m];
+    }
+    public static int Lis(int arr[]){
+        HashSet<Integer> set = new HashSet<>();
+        for(int i=0;i<arr.length;i++){
+            set.add(arr[i]);
+        }
+        
+        int arr2[] = new int[set.size()];//sorted unique els
+        int i = 0;
+        for(int num:set){
+            arr2[i] = num;
+            i++;
+        }
+        
+        Arrays.sort(arr2);
+        return lics(arr,arr2);
     }
     public static void main(String[] args) {
         // int n = 5;
@@ -370,8 +411,8 @@ public class Dp_1{
         // }
         // System.out.println(lcsmemo(str1, str2,str1.length(),str2.length(), dp));   
         // System.out.println(lcsTab(str1, str2));
-        System.out.println(longestCommonSubstr(str1, str2));
-        
-        
+       // System.out.println(longestCommonSubstr(str1, str2));
+        int arr[]={50,3,0,7,40,80};
+        System.out.println(Lis(arr));       
     }
 }
