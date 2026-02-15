@@ -353,6 +353,37 @@ public class Dp_1{
         Arrays.sort(arr2);
         return lics(arr,arr2);
     }
+    //Edit Distance TC O(n*m)
+    public static int editDistance(String str1,String str2){
+        int n = str1.length();
+        int m = str2.length();
+        int dp[][] = new int[n+1][m+1];
+        
+        //intialize
+        for(int i=0;i<n+1;i++){
+            for(int j=0;j<m+1;j++){
+                if(i==0){
+                    dp[i][j] = j;
+                }
+                if(j==0){
+                    dp[i][j] = i;
+                }
+            }
+        }
+        //bottom up 
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<m+1;j++){
+                if(str1.charAt(i-1)==str2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1];
+                }else{
+                    int add = dp[i][j-1]+1;
+                    int del = dp[i-1][j]+1;
+                    int replace = dp[i-1][j-1]+1;
+                    dp[i][j] = Math.min(add, Math.min(del, replace));
+                }
+            }
+        }return dp[n][m];
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -398,8 +429,8 @@ public class Dp_1{
         // int price[] = {1,5,8,9,10,17,17,20};
         // int rodLength = 8;
         // System.out.println(RodCutting(length, price, rodLength));
-        String str1 = "abcdge";
-        String str2 = "abedg";//lcs = "abdg";length = 4
+        // String str1 = "abcdge";
+        // String str2 = "abedg";//lcs = "abdg";length = 4
         // System.out.println(lcs(str1, str2, str1.length(),str2.length()));
         // int n = str1.length();
         // int m = str2.length();
@@ -412,7 +443,10 @@ public class Dp_1{
         // System.out.println(lcsmemo(str1, str2,str1.length(),str2.length(), dp));   
         // System.out.println(lcsTab(str1, str2));
        // System.out.println(longestCommonSubstr(str1, str2));
-        int arr[]={50,3,0,7,40,80};
-        System.out.println(Lis(arr));       
+        // int arr[]={50,3,0,7,40,80};
+        // System.out.println(Lis(arr)); 
+        String word1 = "intention";
+        String word2 = "execution";
+        System.out.println(editDistance(word1, word2));      
     }
 }
