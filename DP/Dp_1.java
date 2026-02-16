@@ -384,6 +384,26 @@ public class Dp_1{
             }
         }return dp[n][m];
     }
+    public static int string_con(String str1,String str2){
+        int n = str1.length();
+        int m = str2.length();
+        int dp[][] = new int[n+1][m+1];
+        
+        
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<m+1;j++){
+                if(str1.charAt(i-1)==str2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1]+1;
+                }else{
+                   dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        int lcs = dp[n][m];
+        int add = n-lcs;
+        int del= m-lcs;
+        return add+del;
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -445,8 +465,11 @@ public class Dp_1{
        // System.out.println(longestCommonSubstr(str1, str2));
         // int arr[]={50,3,0,7,40,80};
         // System.out.println(Lis(arr)); 
-        String word1 = "intention";
-        String word2 = "execution";
-        System.out.println(editDistance(word1, word2));      
+        // String word1 = "intention";
+        // String word2 = "execution";
+        // System.out.println(editDistance(word1, word2));  
+        String str1 = "abcdefg";
+        String str2 = "bcdg";
+        System.out.println(string_con(str1, str2));    
     }
 }
