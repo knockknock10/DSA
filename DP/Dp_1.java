@@ -442,6 +442,31 @@ public class Dp_1{
         return dp[n][m];
         
     }
+    //Catalan's Number 
+    public static int catalansRec(int n){
+        if(n==0 || n==1){
+            return 1;
+        }
+        int ans = 0; //cn
+        for(int i=0;i<=n-1;i++){
+            ans+=catalansRec(i)*catalansRec(n-i-1);
+        }
+        return ans;
+    }
+    //Memoization
+    public static int catalanMemo(int n,int dp[]){
+        if(n==0 || n==1){
+            return 1;
+        }
+        if(dp[n]!=-1){
+            return dp[n];
+        }
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            ans+=catalanMemo(i, dp)*catalanMemo(n-i-1, dp);
+        }
+        return dp[n] = ans;
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -509,8 +534,13 @@ public class Dp_1{
         // String str1 = "abcdefg";
         // String str2 = "bcdg";
         // System.out.println(string_con(str1, str2)); 
-        String s = "baaabab";
-        String p = "*****ba*****ab";
-        System.out.println(isMatch(s, p));   
+        // String s = "baaabab";
+        // String p = "*****ba*****ab";
+        // System.out.println(isMatch(s, p));  
+        int n = 4; 
+        //System.out.println(catalansRec(n));
+        int dp[] = new int[n+1];
+        Arrays.fill(dp,-1);
+        System.out.println(catalanMemo(n, dp));
     }
 }
