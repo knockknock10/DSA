@@ -479,6 +479,25 @@ public class Dp_1{
         }
         return dp[n];
     }
+    //Count the trees
+    public static int countBst(int n){
+        int dp[] = new int[n+1];
+        dp[0] = 1;
+        dp[1] = 1;
+        
+        
+        for(int i=2;i<n+1;i++){
+            for(int j=0;j<i;j++){
+                //Ci = Cj * Ci-j-1
+                //dp[i] = dp[j] * dp[i-j-1];
+                int left = dp[j];
+                int right = dp[i-j-1];
+                dp[i] += left*right;
+            }
+        }
+        return dp[n];
+        
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -549,11 +568,13 @@ public class Dp_1{
         // String s = "baaabab";
         // String p = "*****ba*****ab";
         // System.out.println(isMatch(s, p));  
-        int n = 4; 
+        //int n = 4; 
         //System.out.println(catalansRec(n));
         //int dp[] = new int[n+1];
         //Arrays.fill(dp,-1);
         //System.out.println(catalanMemo(n, dp));
-        System.out.println(catalanTab(n));
+        //System.out.println(catalanTab(n));
+        int n = 3;
+        System.out.println(countBst(n));
     }
 }
