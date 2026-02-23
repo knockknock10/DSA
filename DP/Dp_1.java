@@ -514,6 +514,21 @@ public class Dp_1{
         }
         return dp[n];
     }
+    //Matrix chain multiplication
+    public static int mcm(int arr[],int i,int j){
+        if(i==j){
+            return 0; //single matrix
+        }
+        int ans = Integer.MAX_VALUE;
+        for(int k=i;k<j;k++){
+            int cost1 = mcm(arr, i, k); //Ai ...Ak =>arr[i-1]arr[k]
+            int cost2 = mcm(arr, k+1, j);//Ai+1...Aj =>arr[k]xarr[j]
+            int cost3 = arr[i-1]*arr[k]*arr[j];
+            int finalCost = cost1+cost2+cost3;
+            ans = Math.min(ans, finalCost);
+        }
+        return ans;
+    }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -590,8 +605,13 @@ public class Dp_1{
         //Arrays.fill(dp,-1);
         //System.out.println(catalanMemo(n, dp));
         //System.out.println(catalanTab(n));
-        int n = 4;
+        //int n = 4;
         //System.out.println(countBst(n));
-        System.out.println(mountainRanges(n));
+        //System.out.println(mountainRanges(n));
+        int arr[] = {1,2,3,4,3};
+        int n = arr.length;
+        System.out.println(mcm(arr, 1, n-1));
+ 
+        
     }
 }
