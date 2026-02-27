@@ -578,6 +578,32 @@ public class Dp_1{
             }System.out.println();
         }
     }
+        //Minium partiting TC O(w*n)
+        public static int minPartition(int arr[]){
+            int n = arr.length;
+            int sum = 0;
+            for(int i=0;i<arr.length;i++){
+                sum+=arr[i];
+            }
+            int W = sum/2;
+            
+            int dp[][] = new int[n+1][W+1];
+            
+            //bottom up
+            for(int i=1;i<n+1;i++){
+                for(int j=1;j<W+1;j++){
+                    if(arr[i-1]<=j){//valid
+                        //include
+                        dp[i][j] = Math.max(arr[i-1]+dp[i-1][j-arr[i-1]], dp[i-1][j]);
+                    }else{//invalid
+                        dp[i][j] = dp[i-1][j];    
+                    }
+                }
+            }
+            int sum1 = dp[n][W];
+            int sum2 = sum - sum1;
+            return Math.abs(sum1-sum2);
+        }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -657,14 +683,17 @@ public class Dp_1{
         //int n = 4;
         //System.out.println(countBst(n));
         //System.out.println(mountainRanges(n));
-        int arr[] = {1,2,3,4,3};
-        int n = arr.length;
+        //int arr[] = {1,2,3,4,3};
+        //int n = arr.length;
         // System.out.println(mcm(arr, 1, n-1));
         //int dp[][] = new int[n][n];
         // for(int i=0;i<n;i++){
         //     Arrays.fill(dp[i], -1);
         // }
         // System.out.println(mcmmemo(arr, 1 ,n-1, dp));
-        System.out.println(mcmTab(arr));
+        //System.out.println(mcmTab(arr));
+        int num[] = {1,6,11,5};
+        System.out.println(minPartition(num));
+        
     }
 }
