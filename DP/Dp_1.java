@@ -643,6 +643,22 @@ public class Dp_1{
             tree[i] = tree[2*i+1] + tree[2*i+2];
             return tree[i];
         }
+        public static int getsumUtil(int i,int si,int sj,int qi,int qj){
+            if(qj<=si || qi>=sj){//non overlapping
+                return 0;    
+            }else if(si>=qi && sj<=qj){//complete overlap
+                return tree[i];    
+            }else{//partial overlap
+                int mid = (si+sj)/2;
+                int left = getsumUtil(2*i+1, si, mid, qi, qj);
+                int right = getsumUtil(2*i+2, mid+1, sj, qi, qj);
+                return left+right;               
+            }
+        }
+        public static int getsum(int arr[],int qi,int qj){
+            int n = arr.length;
+            return getsumUtil(0, 0, n-1, qi, qj);
+        }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -676,8 +692,8 @@ public class Dp_1{
         // System.out.println(targetSumSubset(arr, sum));
         // int val[] = {15,14,10,45,30};
         // int wt[] = {2,5,1,3,4};
-        // int W = 7;
         // System.out.println(UnboundedKnapsack(val,wt,W));
+        // int W = 7;
         //int coins[] = {1,2,3};
         //int sum = 4; //ans = 4;
         // int coins[] = {2,5,3,6};
@@ -739,9 +755,10 @@ public class Dp_1{
         int n = arr.length;
         init(n);
         builST(arr, 0, 0, n-1);
-        for(int i=0;i<tree.length;i++){
-            System.out.print(tree[i]+" ");
-        }
+        // for(int i=0;i<tree.length;i++){
+        //     System.out.print(tree[i]+" ");
+        // }
+        System.out.println(getsum(arr, 2, 5));
         
     }
 }
