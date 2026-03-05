@@ -677,6 +677,22 @@ public class Dp_1{
             
             updateUtil(0, 0, n-1, idx, diff);
         }
+        //Maxium element quires
+        public static void inits(int n){
+            tree = new int[4*n];
+            
+        }
+        public static void buildTree(int i,int si,int sj,int arr[]){
+            if(si==sj){
+                tree[i] = arr[si];
+                return;
+            }
+            int mid = (si+sj)/2;//si+(sj-si)/2
+            buildTree(2*i+1, si, mid, arr);
+            buildTree(2*i+2, mid+1, sj, arr);
+            
+            tree[i] = Math.max(tree[2*i+1], tree[2*i+2]);
+        }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -769,15 +785,23 @@ public class Dp_1{
         // System.out.println(minPartition(num));
         // int nums[] = {2,3,1,1,4};
         // System.out.println(minJumps(nums));
-        int arr[] = {1,2,3,4,5,6,7,8};
-        int n = arr.length;
-        init(n);
-        builST(arr, 0, 0, n-1);
-        // for(int i=0;i<tree.length;i++){
+        // int arr[] = {1,2,3,4,5,6,7,8};
+        // int n = arr.length;
+        // init(n);
+        // builST(arr, 0, 0, n-1);
+        // // for(int i=0;i<tree.length;i++){
         //     System.out.print(tree[i]+" ");
         // }
-        System.out.println(getsum(arr, 2, 5));//18
-        update(arr, 2, 2);
-        System.out.println(getsum(arr, 2, 5));//17
+        // System.out.println(getsum(arr, 2, 5));//18
+        // update(arr, 2, 2);
+        // System.out.println(getsum(arr, 2, 5));//17
+      int arr[] = {6,8,-1,2,17,1,3,2,4};
+      int n = arr.length;
+      inits(n);
+      buildTree(0, 0, n-1, arr);
+      for(int i=0;i<tree.length;i++){
+        System.out.print(tree[i]+" ");
+      }
     }
+    
 }
