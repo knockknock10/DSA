@@ -682,7 +682,7 @@ public class Dp_1{
             tree = new int[4*n];
             
         }
-        public static void buildTree(int i,int si,int sj,int arr[]){
+        public static void buildTree(int i,int si,int sj,int arr[]){//O(n)
             if(si==sj){
                 tree[i] = arr[si];
                 return;
@@ -692,6 +692,43 @@ public class Dp_1{
             buildTree(2*i+2, mid+1, sj, arr);
             
             tree[i] = Math.max(tree[2*i+1], tree[2*i+2]);
+        }
+        public static int getmax(int arr[],int qi,int qj){
+            int n = arr.length;
+            return getmaxutil(0,0,n-1,qi,qj);
+        }
+        public static int getmaxutil(int i,int si,int sj,int qi,int qj){
+            if(si>qj || sj<qi){//no overlap
+                return Integer.MIN_VALUE;
+            }else if(si>=qi && sj<=qj){
+                return tree[i];
+            }else{//partial overlap
+                int mid = (si+sj)/2;
+                int leftAns = getmaxutil(2*i+1, si, mid, qi, qj);
+                int rightAns = getmaxutil(2*i+2, mid+1, sj, qi, qj);
+                return Math.max(leftAns, rightAns);
+            }
+        }
+        //update
+        public static void updates(int arr[],int idx,int newVal){///o(logn)
+            arr[idx] = newVal;
+            int n = arr.length;
+            updateUtils(0, 0, n-1, idx, newVal);
+        }
+        //update that segment tree
+        public static void updateUtils(int i,int si,int sj,int idx,int newVal){
+            if(idx<si || idx>sj){
+                return;
+            }
+            if(si == sj){
+                tree[i] = newVal;
+            }
+            if(si!=sj){
+                tree[i] = Math.max(tree[i], newVal);
+                int mid = (si+sj)/2;
+                updateUtils(2*i+1, si, mid, idx, newVal);//left 
+                updateUtils(2*i+2, mid+1, sj, idx, newVal);
+            }
         }
     public static void main(String[] args) {
         // int n = 5;
@@ -799,9 +836,15 @@ public class Dp_1{
       int n = arr.length;
       inits(n);
       buildTree(0, 0, n-1, arr);
-      for(int i=0;i<tree.length;i++){
-        System.out.print(tree[i]+" ");
-      }
+    //   for(int i=0;i<tree.length;i++){
+    //     System.out.print(tree[i]+" ");
+    //   }
+        int max = getmax(arr, 2, 5);
+        System.out.println(max);
+        updates(arr, 2, 20);
+        max = getmax(arr, 2, 5);
+        System.out.println(max);//20
+        //take the while loop while({qi,qj})
     }
     
 }
