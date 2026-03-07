@@ -1,3 +1,4 @@
+package Greedy;
 // Indian coins solution
     public static void indiancoins() {
         // to sort in rev order our arr should be as Integer not int
