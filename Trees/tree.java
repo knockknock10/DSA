@@ -74,6 +74,24 @@ public class tree {
             }
         }
     }
+    //height of tree TC O(n)
+    public static int heighttree(Node root){
+        if(root==null){
+            return 0;
+        }
+        int left = heighttree(root.left);
+        int right = heighttree(root.right);
+        return Math.max(left,right)+1;
+    } 
+    //Counting the no nodes TC O(n)
+    public static int coutnNodes(Node root){
+        if(root==null){
+            return 0;
+        }
+        int left = coutnNodes(root.left);
+        int right = coutnNodes(root.right);
+        return left+right+1;
+    }
     public static void main(String[] args) {
         int data[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
 
@@ -84,6 +102,8 @@ public class tree {
         inorder(root);
         System.out.println();
         postorder(root);
+        System.out.println(heighttree(root));
+        System.out.println(coutnNodes(root));
     
     }
 }
