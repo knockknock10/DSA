@@ -92,6 +92,19 @@ public class tree {
         int right = coutnNodes(root.right);
         return left+right+1;
     }
+    //Diamete of a tree | lomgst path from one leaf to another TC O(n^2)
+    public static int dia(Node root){
+        if(root==null){
+            return 0;
+        }
+        int ld = dia(root.left);
+        int lh = heighttree(root.left);
+        int rd = dia(root.right);
+        int rh = heighttree(root.right);
+        
+        int selfd = lh+rh;
+        return Math.max(selfd, Math.max(ld,rd));
+    }
     public static void main(String[] args) {
         int data[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
 
