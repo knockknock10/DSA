@@ -105,6 +105,15 @@ public class tree {
         int selfd = lh+rh;
         return Math.max(selfd, Math.max(ld,rd));
     }
+    //Sum of nodes TC O(n)
+    public static int sumNode(Node root){
+        if(root==null){
+            return 0;
+        }
+        int lsum = sumNode(root.left);
+        int rsum = sumNode(root.right);
+        return lsum+rsum+root.data;
+    }
     public static void main(String[] args) {
         int data[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
 
@@ -117,6 +126,7 @@ public class tree {
         postorder(root);
         System.out.println(heighttree(root));
         System.out.println(coutnNodes(root));
+        System.out.println(sumNode(root));
     
     }
 }
