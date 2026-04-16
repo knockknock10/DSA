@@ -21,6 +21,41 @@ public class pract {
         Arrays.fill(dp,-1);
         return robs(n,nums,dp);
     }
+    //House Robber III
+    static class Node {
+        int val;
+        Node left;
+        Node right;
+        public Node(int val,Node left,Node right){
+            val = this.val;
+            left = this.left;
+            right = this.right;
+        }
+        
+    }
+    private static int robIII(Node root,HashMap<Node,Integer> dp){
+        if(root == null){
+            return 0;
+        }
+        if(dp.containsKey(root) == true){
+            dp.get(root);
+        }
+        int notTake = robIII(root.left, dp)+ robIII(root.right, dp);
+        int take = root.val;
+        if(root.left!=null){
+            take+= robIII(root.left.left, dp)+robIII(root.left.right, dp);
+        }
+        if(root.right!=null){
+            take+=robIII(root.right.right, dp)+robIII(root.right.left, dp);
+        }
+        int ans = Math.max(notTake,take);
+        dp.put(root, ans);
+        return ans;
+    }
+    public static int robIIIUtil(Node root){
+        HashMap<Node,Integer> dp = new HashMap<>();
+        return robIII(root, dp);
+    }
     public static void main(String[] args) {
         int nums[] = {1,2,3,1};
         System.out.println(rob(nums));
