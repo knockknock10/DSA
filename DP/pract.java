@@ -72,8 +72,31 @@ public class pract {
         HashMap<Node,Integer> dp = new HashMap<>();
         return robIII(root, dp);
     }
+    //62. Unique Paths
+    public static int utilUniquepaths(int row,int col,int dp[][],int m,int n){
+        if(row==m-1 && col == n-1) return 1;
+        if(row<0 || col<0 || row>=m || col>=n) return 0;
+        
+        if(dp[row][col]!=-1) return dp[row][col];
+        int down = utilUniquepaths(row+1, col, dp, m, n);
+        int right = utilUniquepaths(row, col+1, dp, m, n);
+        int res = down+right;
+        return dp[row][col] = res;        
+    }
+    public static int Uniquepaths(int m,int n){
+        int[][] dp = new int[m][n];
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                dp[i][j] = -1;
+            }
+        }
+        return utilUniquepaths(0, 0, dp, m, n);
+    }
     public static void main(String[] args) {
-        int nums[] = {1,2,3,1};
-        System.out.println(rob(nums));
+        // int nums[] = {1,2,3,1};
+        // System.out.println(rob(nums));
+        int m = 3, n = 7;
+        System.out.println(Uniquepaths(m, n));
     }
 }
