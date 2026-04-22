@@ -93,10 +93,38 @@ public class pract {
         }
         return utilUniquepaths(0, 0, dp, m, n);
     }
+    //63. Unique Paths II  here both the tc and Sc is (M*N)
+    private static int utiluniquePathsWithObstacles(int row,int col,int[][] dp,int m,int n,int[][] obstacleGrid){
+        if(row<0 || row>=m || col<0 || col>=n) return 0;
+        if(obstacleGrid[row][col] == 1) return 0;
+        
+        if(row==m-1 && col==n-1) return 1;
+        if(dp[row][col]!=-1) return dp[row][col];
+        
+        int down = utiluniquePathsWithObstacles(row+1,col,dp,m,n,obstacleGrid);
+        int right = utiluniquePathsWithObstacles(row,col+1,dp,m,n,obstacleGrid);
+        int res = down + right;
+        return dp[row][col] = res;
+    }
+    public static int uniquePathsWithObstacles(int[][] obstacleGrid){
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        
+        int[][] dp = new int[m][n];
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                dp[i][j] = -1;
+            }
+        }
+        return utiluniquePathsWithObstacles(0,0,dp,m,n,obstacleGrid);
+    }
     public static void main(String[] args) {
         // int nums[] = {1,2,3,1};
         // System.out.println(rob(nums));
-        int m = 3, n = 7;
-        System.out.println(Uniquepaths(m, n));
+        // int m = 3, n = 7;
+        // System.out.println(Uniquepaths(m, n));
+        int obstacleGrid[][] = {{0,1},{0,0}};//{{0,0,0},{0,1,0},{0,0,0}};
+        System.out.println(uniquePathsWithObstacles(obstacleGrid));        
     }
 }
