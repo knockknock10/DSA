@@ -119,12 +119,35 @@ public class pract {
         }
         return utiluniquePathsWithObstacles(0,0,dp,m,n,obstacleGrid);
     }
+    // Count Square Submatrices with All Ones
+    public static int countSquare(int[][] matrix){
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        int count[][] = new int[n][m];
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(i==0 || j==0){
+                    count[i][j] = matrix[i][j];
+                }else if(matrix[i][j]==1){
+                    count[i][j] = 1+Math.min(count[i-1][j],
+                            Math.min(count[i-1][j-1], count[i][j-1])
+                    );
+                }
+                ans+= count[i][j];
+            }
+        }
+        return ans;
+    } 
     public static void main(String[] args) {
         // int nums[] = {1,2,3,1};
         // System.out.println(rob(nums));
         // int m = 3, n = 7;
         // System.out.println(Uniquepaths(m, n));
-        int obstacleGrid[][] = {{0,1},{0,0}};//{{0,0,0},{0,1,0},{0,0,0}};
-        System.out.println(uniquePathsWithObstacles(obstacleGrid));        
+        // int obstacleGrid[][] = {{0,1},{0,0}};//{{0,0,0},{0,1,0},{0,0,0}};
+        // System.out.println(uniquePathsWithObstacles(obstacleGrid));  
+        int matrix[][] ={{0,1,1,1},{1,1,1,1},{0,1,1,1}};
+        System.out.println(countSquare(matrix));      
     }
 }
