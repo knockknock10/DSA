@@ -160,6 +160,30 @@ public class pract {
         return lis;
         
     }
+    //LIS optimal approach
+    public static int lowerbound(List<Integer> subset,int tar){
+        int ans = subset.size();
+        int le = 0,ri = subset.size()-1;
+        while (le<=ri) {
+            int mid = (le+ri)/2;
+            if(subset.get(mid)>=tar){
+                ans = mid;
+                ri = mid-1;
+            }else{
+                le = mid+1;
+            }
+        }
+        return ans;
+    }
+    public static int licopt(int[] nums){
+        List<Integer> subset = new ArrayList<>();
+        for(int i=0;i<nums.length;i++){
+            int lb = lowerbound(subset,nums[i]);
+            if(lb<subset.size()) subset.set(lb, nums[i]);
+            else subset.add(nums[i]);
+        } 
+        return subset.size();
+    }
     public static void main(String[] args) {
         // int nums[] = {1,2,3,1};
         // System.out.println(rob(nums));
