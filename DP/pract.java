@@ -1,6 +1,8 @@
 package DP;
 import java.util.*;
 
+import org.w3c.dom.ranges.Range;
+
 public class pract {
     //House Robber Problem
     private static int robs(int n,int nums[],int dp[]){
@@ -183,6 +185,27 @@ public class pract {
             else subset.add(nums[i]);
         } 
         return subset.size();
+    }
+    // 303 Range Sum Query - Immutable
+    class NumArray{
+        int pre[];
+        public NumArray(int[] nums){
+            pre = nums;
+            pre[0] = nums[0];
+            for(int i=1;i<nums.length;i++){
+                pre[i] = pre[i-1]+ nums[i];
+            }
+        }
+        public int sumRange(int left,int right){
+            if(left == 0) return pre[right];
+            return pre[right]-pre[left-1];
+        }
+    }
+    //307. Range Sum Query - Mutable
+    class NumArray1{
+        class Node{
+            
+        }
     }
     public static void main(String[] args) {
         // int nums[] = {1,2,3,1};
