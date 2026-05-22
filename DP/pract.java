@@ -306,7 +306,7 @@ public class pract {
     //         return tree.Query(tree.root, left, right);
     //     }
     // }
-
+    
     public static void main(String[] args) {
         // int nums[] = {1,2,3,1};
         // System.out.println(rob(nums));
