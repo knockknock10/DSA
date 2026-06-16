@@ -35,8 +35,30 @@ public class ArrayPract {
             x--;
         }
     }
+    //pascals triangel
+    public static void pascal(int n){
+        int[][] ans = new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=i;j++){
+                if(j==0 || j==i){
+                    ans[i][j] = 1;
+                }else{
+                    ans[i][j] = ans[i-1][j-1]+ans[i-1][j];
+                }
+            }
+        }
+        //print
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=i;j++){
+                System.out.print(ans[i][j]+" ");
+            }
+            System.out.println();;
+        }
+    }
     public static void main(String[] args) {
         int[] nums = {1,1,2};
         System.out.println(removeDuplicates(nums));
+        int n = 5;
+        pascal(n);
     }
 }
