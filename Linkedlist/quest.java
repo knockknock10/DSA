@@ -44,6 +44,29 @@ public class quest{
         }
         return p1;  
     }
+    //AM  Partiotion List  TC O(n) SC O(1)
+    public static Node partition (Node head,int x){
+        Node beforehead = new Node(0);
+        Node before = beforehead;
+        Node afterhead = new Node(0);
+        Node after = afterhead;
+        
+        while(head!=null){
+            if(head.data<x){
+                before.next = head;
+                before = before.next;
+            }else{
+                after.next = head;
+                after = after.next;
+            }
+            head = head.next;
+            
+        }
+        after.next = null;
+        before.next = afterhead.next;
+        return beforehead.next;
+        
+    }
     public static void main(String[] args) {
         
     }
