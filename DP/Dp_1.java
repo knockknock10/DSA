@@ -578,6 +578,158 @@ public class Dp_1{
             }System.out.println();
         }
     }
+        //Minium partiting TC O(w*n)
+        public static int minPartition(int arr[]){
+            int n = arr.length;
+            int sum = 0;
+            for(int i=0;i<arr.length;i++){
+                sum+=arr[i];
+            }
+            int W = sum/2;
+            
+            int dp[][] = new int[n+1][W+1];
+            
+            //bottom up
+            for(int i=1;i<n+1;i++){
+                for(int j=1;j<W+1;j++){
+                    if(arr[i-1]<=j){//valid
+                        //include
+                        dp[i][j] = Math.max(arr[i-1]+dp[i-1][j-arr[i-1]], dp[i-1][j]);
+                    }else{//invalid
+                        dp[i][j] = dp[i-1][j];    
+                    }
+                }
+            }
+            int sum1 = dp[n][W];
+            int sum2 = sum - sum1;
+            return Math.abs(sum1-sum2);
+        }
+        //Min array jumps tabulation
+        public static int minJumps(int nums[]){
+            int n = nums.length;
+            int dp[] = new int[n];
+            Arrays.fill(dp,-1);
+            dp[n-1] = 0;
+            
+            for(int i=n-2;i>=0;i--){
+                int steps = nums[i];
+                int ans = Integer.MAX_VALUE;
+                for(int j=i+1;j<=i+steps && j<n ;j++){
+                    if(dp[j]!=-1){
+                        ans = Math.min(ans, dp[j]+1);
+                    }
+                }
+                if(ans!=Integer.MAX_VALUE){
+                    dp[i] = ans;
+                }
+            }
+            return dp[0];
+        }
+        //segment Tree
+        //Construct TC O(n)
+        static int tree[];
+        public static void init(int n){
+            tree = new int[4*n];
+            
+        }
+        public static int builST(int arr[],int i,int start,int end){
+            if(start==end){ //leaf nodes
+                tree[i] = arr[start];
+                return arr[start];
+            }
+            int mid = (start+end)/2;
+            builST(arr, 2*i+1, start, mid);//left subtree -2*i+1
+            builST(arr, 2*i+2, mid+1, end);//right subtree -2*i+2
+            tree[i] = tree[2*i+1] + tree[2*i+2];
+            return tree[i];
+        }
+        public static int getsumUtil(int i,int si,int sj,int qi,int qj){
+            if(qj<=si || qi>=sj){//non overlapping
+                return 0;    
+            }else if(si>=qi && sj<=qj){//complete overlap
+                return tree[i];    
+            }else{//partial overlap
+                int mid = (si+sj)/2;
+                int left = getsumUtil(2*i+1, si, mid, qi, qj);
+                int right = getsumUtil(2*i+2, mid+1, sj, qi, qj);
+                return left+right;               
+            }
+        }
+        public static int getsum(int arr[],int qi,int qj){
+            int n = arr.length;
+            return getsumUtil(0, 0, n-1, qi, qj);
+        }
+        public static void updateUtil(int i,int si,int sj,int idx,int diff){//logn
+            if(idx>sj || idx <si){
+                return;
+            }
+            tree[i]+=diff;
+            if(si!=sj){//non-leaf
+                int mid = (si+sj)/2;
+                updateUtil(2*i+1, si, mid, idx, diff);//left
+                updateUtil(2*i+2, mid+1, sj, idx, diff);    //right
+            }
+        }
+        public static void update(int arr[],int idx,int newval){
+            int n = arr.length;//O(n)
+            int diff = newval-arr[idx];
+            arr[idx] = newval;
+            
+            updateUtil(0, 0, n-1, idx, diff);
+        }
+        //Maxium element quires
+        public static void inits(int n){
+            tree = new int[4*n];
+            
+        }
+        public static void buildTree(int i,int si,int sj,int arr[]){//O(n)
+            if(si==sj){
+                tree[i] = arr[si];
+                return;
+            }
+            int mid = (si+sj)/2;//si+(sj-si)/2
+            buildTree(2*i+1, si, mid, arr);
+            buildTree(2*i+2, mid+1, sj, arr);
+            
+            tree[i] = Math.max(tree[2*i+1], tree[2*i+2]);
+        }
+        public static int getmax(int arr[],int qi,int qj){
+            int n = arr.length;
+            return getmaxutil(0,0,n-1,qi,qj);
+        }
+        public static int getmaxutil(int i,int si,int sj,int qi,int qj){
+            if(si>qj || sj<qi){//no overlap
+                return Integer.MIN_VALUE;
+            }else if(si>=qi && sj<=qj){
+                return tree[i];
+            }else{//partial overlap
+                int mid = (si+sj)/2;
+                int leftAns = getmaxutil(2*i+1, si, mid, qi, qj);
+                int rightAns = getmaxutil(2*i+2, mid+1, sj, qi, qj);
+                return Math.max(leftAns, rightAns);
+            }
+        }
+        //update
+        public static void updates(int arr[],int idx,int newVal){///o(logn)
+            arr[idx] = newVal;
+            int n = arr.length;
+            updateUtils(0, 0, n-1, idx, newVal);
+        }
+        //update that segment tree
+        public static void updateUtils(int i,int si,int sj,int idx,int newVal){
+            if(idx<si || idx>sj){
+                return;
+            }
+            if(si == sj){
+                tree[i] = newVal;
+            }
+            if(si!=sj){
+                tree[i] = Math.max(tree[i], newVal);
+                int mid = (si+sj)/2;
+                updateUtils(2*i+1, si, mid, idx, newVal);//left 
+                updateUtils(2*i+2, mid+1, sj, idx, newVal);
+            }
+        }
     public static void main(String[] args) {
         // int n = 5;
         // int f[] = new int[n+1];
@@ -611,8 +763,8 @@ public class Dp_1{
         // System.out.println(targetSumSubset(arr, sum));
         // int val[] = {15,14,10,45,30};
         // int wt[] = {2,5,1,3,4};
-        // int W = 7;
         // System.out.println(UnboundedKnapsack(val,wt,W));
+        // int W = 7;
         //int coins[] = {1,2,3};
         //int sum = 4; //ans = 4;
         // int coins[] = {2,5,3,6};
@@ -657,14 +809,42 @@ public class Dp_1{
         //int n = 4;
         //System.out.println(countBst(n));
         //System.out.println(mountainRanges(n));
-        int arr[] = {1,2,3,4,3};
-        int n = arr.length;
+        //int arr[] = {1,2,3,4,3};
+        //int n = arr.length;
         // System.out.println(mcm(arr, 1, n-1));
         //int dp[][] = new int[n][n];
         // for(int i=0;i<n;i++){
         //     Arrays.fill(dp[i], -1);
         // }
         // System.out.println(mcmmemo(arr, 1 ,n-1, dp));
-        System.out.println(mcmTab(arr));
+        //System.out.println(mcmTab(arr));
+        // int num[] = {1,6,11,5};
+        // System.out.println(minPartition(num));
+        // int nums[] = {2,3,1,1,4};
+        // System.out.println(minJumps(nums));
+        // int arr[] = {1,2,3,4,5,6,7,8};
+        // int n = arr.length;
+        // init(n);
+        // builST(arr, 0, 0, n-1);
+        // // for(int i=0;i<tree.length;i++){
+        //     System.out.print(tree[i]+" ");
+        // }
+        // System.out.println(getsum(arr, 2, 5));//18
+        // update(arr, 2, 2);
+        // System.out.println(getsum(arr, 2, 5));//17
+      int arr[] = {6,8,-1,2,17,1,3,2,4};
+      int n = arr.length;
+      inits(n);
+      buildTree(0, 0, n-1, arr);
+    //   for(int i=0;i<tree.length;i++){
+    //     System.out.print(tree[i]+" ");
+    //   }
+        int max = getmax(arr, 2, 5);
+        System.out.println(max);
+        updates(arr, 2, 20);
+        max = getmax(arr, 2, 5);
+        System.out.println(max);//20
+        //take the while loop while({qi,qj})
     }
+    
 }
