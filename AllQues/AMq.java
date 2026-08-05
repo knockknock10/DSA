@@ -1,19 +1,39 @@
+import java.util.*;
 
-public class AMq{
+public class AMq {
     
-    //A.M Car Pooling Tc O(N+K) Sc O(K)
-    public boolean carPooling(int[][] trips,int capacity){
-        int[]  a = new int[1001];
-        for(int a[]:trips){
-            a[a[1]]+=a[0];
-            a[a[2]]+=a[0];
+    //car pooling
+    public boolean carPooling(int[][] trips, int capacity) {
+        int[] diff = new int[1001];
+        for (int[] trip : trips) {
+            diff[trip[1]] += trip[0];
+            diff[trip[2]] -= trip[0];
         }
-        for(int i=0;capacity>=0 && i<1001;i++){
-            capacity-=a[i];
+        for (int i = 0; i < 1001; i++) {
+            capacity -= diff[i];
+            if (capacity < 0) {
+                return false;
+            }
         }
-        return capacity>=0
+        return true;
     }
-    public static void main(String[] args){
-        
+    //215 kth largest element in array 
+    public int findlargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int num : nums) {
+            pq.offer(num);
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+        return pq.peek();
+    }
+
+    public static void main(String[] args) {
+        int[] kl = {3, 2, 1, 5, 6, 4};
+        int k = 2;
+
+        AMq obj = new AMq();
+        System.out.println(obj.findlargest(kl, k));
     }
 }
