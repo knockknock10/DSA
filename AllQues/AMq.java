@@ -13,7 +13,27 @@ public class AMq{
         }
         return capacity>=0
     }
+    //kth largest element in an array Tc O(NlogK) Sc O(K)
+    public int findlargest(int[] nums,int k){
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+         for(int i:nums){
+            pq.offer(i);
+            if(pq.size()<k){
+                pq.poll();
+            }
+         }
+         return pq.peek();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public static void main(String[] args){
-        
+        system.out.println("Hello World");
     }
 }
