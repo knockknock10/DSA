@@ -1,22 +1,11 @@
 class Solution {
     public long countCommas(long n) {
-        long c = 0;
-        if(n>=1000){
-            c+=(n-999);
+        long a = 0;
+        for(long i = 1000;i<=n;i*=1000){
+            a+=n-i+1;
+            if(i>n/1000) break;
         }
-        if(n>=1000000){
-            c+=(n-999999);
-        }
-        if(n>=1000000000L){
-            c+=(n-999999999L);
-        }
-        if(n>=1000000000000L){
-            c+=(n-999999999999L);
-        }
-        if(n>=1000000000000000L){
-            c+=(n-999999999999999L);
-        }
-        return c;
-        
+
+        return a;
     }
 }
