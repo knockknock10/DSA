@@ -40,11 +40,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Derive LeetCode CSRF token
+        id: leetcode-csrf
+        env:
+          LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
+        run: |
+          set -euo pipefail
+          csrf_token="$(
+            curl -sSI https://leetcode.com \
+              -H "Cookie: LEETCODE_SESSION=${LEETCODE_SESSION}" \
+              | tr -d '\r' \
+              | awk -F'csrftoken=' '/^set-cookie:/ && /csrftoken=/{split($2,a,";"); print a[1]; exit}'
+          )"
+
+          if [ -z "${csrf_token}" ]; then
+            echo "Unable to derive csrftoken from LEETCODE_SESSION. Update LEETCODE_SESSION secret." >&2
+            exit 1
+          fi
+
+          echo "::add-mask::${csrf_token}"
+          echo "value=${csrf_token}" >> "${GITHUB_OUTPUT}"
+
       - name: Sync LeetCode submissions
         uses: joshcai/leetcode-sync@v1.7
         with:
           github-token: ${{ github.token }}
-          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+          leetcode-csrf-token: ${{ steps.leetcode-csrf.outputs.value }}
           leetcode-session: ${{ secrets.LEETCODE_SESSION }}
           destination-folder: Data Structures & Algorithms
           verbose: true
